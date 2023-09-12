@@ -60,5 +60,8 @@ def execute_round(courses, prices, preferences, highest_available, q, psi, x, b,
                 highest_available[i] += 1
     return
 
+# Runs the full A-CEEI Draft
 def draft():
     return
+
+# https://arxiv.org/pdf/2305.11406.pdf for better way of doing this
