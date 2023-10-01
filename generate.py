@@ -35,3 +35,19 @@ def generate_constraints(m, class_days, class_times, minl, l, t) :
 # class_days = [(1, 3), (2, 4), (5, 0), (1, 2, 3, 4), (1, 2, 3, 4, 5)]
 # times = [8.5, 9, 9.5, 10, 11, 12.5, 1.5, 2.5, 3, 3.5, 7.5]
 # print(generate_constraints(20, times, 2, 5, 4))
+
+
+def generate_courses(m, class_days, class_times, minl, l, t) :
+    times, days, types, _ = generate_constraints(m, class_days, class_times, minl, l, t)
+    courses = []
+    for i in range(len(times)) :
+        course = {
+            'time' : times[i],
+            'days' : days[i],
+            'type' : types[i],
+            'price' : 0
+        }
+        courses.append(course)
+    
+    return np.array(courses)
+
