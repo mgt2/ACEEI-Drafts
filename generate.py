@@ -19,7 +19,7 @@ def generate_etas (n, m) :
 # t : number of types of courses
 def generate_constraints(m, class_times, minl, l, t) :
     times = np.random.randint(0, len(class_times), size=(1, m))[0]
-    class_length = np.random.choice([0.833, 1.333, 2.833], size = m)
+    class_length = np.random.choice([0.833, 1.333, 2.833], size = m, p=[0.5, 0.45, 0.05])
     tuples = []
     for i in range(len(times)) :
         tuples.append((class_times[times[i]], class_times[times[i]] + class_length[i]))
