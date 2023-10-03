@@ -36,7 +36,7 @@ def generate_constraints(m, class_days, class_times, minl, l, t) :
 # times = [8.5, 9, 9.5, 10, 11, 12.5, 1.5, 2.5, 3, 3.5, 7.5]
 # print(generate_constraints(20, times, 2, 5, 4))
 
-
+# Generates m courses
 def generate_courses(m, class_days, class_times, minl, l, t) :
     times, days, types, _ = generate_constraints(m, class_days, class_times, minl, l, t)
     courses = []
