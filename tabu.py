@@ -1,8 +1,14 @@
 import numpy as np
+from generate import *
+from node import *
 
-def tabu (bound, t) :
+def random_start_point(m) :
+    start_prices = np.random.rand(m)
+    return Node.create(start_prices)
+
+def tabu (m, bound, t) :
     q = np.array([])
-    curnode = random_start_point()
+    curnode = random_start_point(m)
     bestnode = curnode
 
     while bestnode > bound :

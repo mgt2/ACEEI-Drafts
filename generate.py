@@ -8,9 +8,14 @@ def generate_valuations(n, m) :
 
 # Generates n student etas
 def generate_etas (n, m) :
-    student_eta = np.random.randint(0, m, size=(n, 5))
-    eta_values = np.random.rand(n)
-    return student_eta, eta_values
+    student_eta = np.zeros((n, m, m))
+    # Create a random matrix
+    for i in range(n) :
+        eta_values = np.random.uniform(-1, 1, size=(m, m))
+        np.fill_diagonal(eta_values, 0)
+        student_eta[i] = np.triu(eta_values)
+
+    return student_eta
 
 # Generates constraints for each course: picks what type of course
 # it is, what time it occurs, and how many of each type is allowed (picked between 2 and l)
