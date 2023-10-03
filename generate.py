@@ -5,6 +5,10 @@ import numpy as np
 def generate_valuations(n, m) :
     return np.random.rand(n, m)
 
+# Generates budgets (MAY CHANGE)
+def generate_budgets(n, min_courses) :
+    return np.random.rand(n) + min_courses
+
 
 # Generates n student etas
 def generate_etas (n, m) :
