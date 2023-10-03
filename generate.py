@@ -2,8 +2,8 @@ import random
 import numpy as np
 
 # Generates n student valuations of m courses
-def generate_valuations(n, m) :
-    return np.random.rand(n, m)
+def generate_valuations(n, m, k) :
+    return np.random.rand(n, m) / k
 
 # Generates budgets (MAY CHANGE)
 def generate_budgets(n, k) :
