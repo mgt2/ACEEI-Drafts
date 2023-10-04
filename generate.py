@@ -1,5 +1,8 @@
 import random
 import numpy as np
+import gurobipy
+
+gurobipy.setParam("TokenFile", "gurobi.lic")
 
 # Generates n student valuations of m courses
 def generate_valuations(n, m, k) :
@@ -37,12 +40,12 @@ def generate_constraints(m, class_days, class_times, minl, l, t) :
     tuples = np.array(tuples)
     types = np.random.randint(0, t, size=(1, m))[0]
     maxes = np.random.randint(minl, l, size= (1, t))[0]
-
+    
     return tuples, days, np.array(types), maxes
 
 # Sample input
 # class_days = [(1, 3), (2, 4), (5, 0), (1, 2, 3, 4), (1, 2, 3, 4, 5)]
-# times = [8.5, 9, 9.5, 10, 11, 12.5, 1.5, 2.5, 3, 3.5, 7.5]
+# times = [8.5, 9, 9.5, 10, 11, 12.5, 13.5, 14.5, 15, 16.5, 19.5]
 # print(generate_constraints(20, times, 2, 5, 4))
 
 # Generates m courses

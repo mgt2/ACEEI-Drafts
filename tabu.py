@@ -1,14 +1,18 @@
 import numpy as np
 from generate import *
 from node import *
+import gurobipy
 
-def random_start_point(m) :
-    start_prices = np.random.rand(m)
+gurobipy.setParam("TokenFile", "gurobi.lic")
+
+def random_start_point(m, k) :
+    start_prices = np.random.rand(m) / k
     return Node.create(start_prices)
 
-def tabu (m, bound, t) :
+def tabu (m, k, bound, t, model=None) :
+    model = gurobipy.model()
     q = np.array([])
-    curnode = random_start_point(m)
+    curnode = random_start_point(m, k)
     bestnode = curnode
 
     while bestnode > bound :
@@ -25,4 +29,5 @@ def tabu (m, bound, t) :
                 break
         if curnode.score() < bestnode.score() :
             bestnode = curnode
+    model.dispose()
     return
