@@ -10,7 +10,7 @@ def generate_valuations(n, m, k) :
 
 # Generates budgets (MAY CHANGE)
 def generate_budgets(n, k) :
-    return np.random.uniform(1, 1 + min(1/n, 1/(k-1)), size = n)
+    return np.random.uniform(1, 1 + min(1/n, 1/(k-1)), size = n) * 100
 
 
 # Generates n student etas
