@@ -6,7 +6,7 @@ gurobipy.setParam("TokenFile", "gurobi.lic")
 
 # Generates n student valuations of m courses
 def generate_valuations(n, m, k) :
-    return np.random.rand(n, m) / k
+    return np.random.rand(n, m) * 100 / k
 
 # Generates budgets (MAY CHANGE)
 def generate_budgets(n, k) :
@@ -18,7 +18,7 @@ def generate_etas (n, m) :
     student_eta = np.zeros((n, m, m))
     # Create a random matrix
     for i in range(n) :
-        eta_values = np.random.uniform(-1, 1, size=(m, m))
+        eta_values = np.random.uniform(-10, 10, size=(m, m))
         np.fill_diagonal(eta_values, 0)
         student_eta[i] = np.triu(eta_values)
 
@@ -50,16 +50,33 @@ def generate_constraints(m, class_days, class_times, minl, l, t) :
 
 # Generates m courses
 def generate_courses(m, class_days, class_times, minl, l, t) :
-    times, days, types, _ = generate_constraints(m, class_days, class_times, minl, l, t)
+    times, days, types, maxes = generate_constraints(m, class_days, class_times, minl, l, t)
     courses = []
     for i in range(len(times)) :
         course = {
             'time' : times[i],
             'days' : days[i],
             'type' : types[i],
-            'price' : 0
+            'price' : 0,
+            'max_type' : maxes[types[i]]
         }
         courses.append(course)
     
     return np.array(courses)
+
+# Gathers all data into a struct, for easier use in the A-CEEI mechanism
+def get_data_struct (data):
+    valuations = generate_valuations(data.n, data.m, data.k)
+    budgets = generate_budgets(data.n, data.k)
+    etas = generate_etas(data.n, data.m)
+    courses = generate_courses(data.m, data.class_days, data.class_times, data.minl, data.l, data.t)
+    
+
+    data_struct = {
+        'valuations': valuations,
+        'budgets':budgets,
+        'etas': etas,
+        'courses':courses
+    }
+    return data_struct
 
