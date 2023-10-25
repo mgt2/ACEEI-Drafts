@@ -8,9 +8,16 @@ class Node :
 
     score = 2 ** 64
     courses = np.array([])
-    def create(prices, potential_courses) :
-        courses = potential_courses
+    demand = 0
+    prices = np.array([])
+    
+    def create(self, prices, potential_courses) :
+        self.courses = potential_courses
+        self.prices = prices
         return
     
-    def score() :
+    def calculate_demand(self) :
+        return self.demand
+    
+    def score(self) :
         return
