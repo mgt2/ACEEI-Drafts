@@ -1,5 +1,6 @@
 import gurobipy as gp
 from gurobipy import GRB
+import numpy as np
 
 # Computes the demand LP function
 # Takes in as parameters a set of prices and the data_struct from generate.py, 
@@ -12,7 +13,6 @@ def compute_demand(prices, data, j) :
     x = model.addVars(m, vtype=GRB.BINARY, name="x")
 
     # Sets objective
-    #model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) + gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)), sense=GRB.MAXIMIZE) # + gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i,k in range(m)), sense=GRB.MAXIMIZE)
     model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) +
                    gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)),
                    sense=GRB.MAXIMIZE)
@@ -32,21 +32,23 @@ def compute_demand(prices, data, j) :
     model.optimize()
 
     # Get the optimal solution
-    selected_courses = [i for i in range(m) if x[i].x > 0.5]
+    selected_courses = [int(x[i].x) for i in range(m)]
+    model.dispose()
 
     return selected_courses
 
 
-data = {
-    'valuations': [[1, 1, 3, 4, 0]],
-    'm' : 5,
-    'c_types' : [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0,0,1],[0,0,1]],
-    'maxes' : [0, 1, 2],
-    'c_times':[[]],
-    'etas':[[[0.3, 0.5, -0.2, 0, 1], [0.2, 0.3, 0, 0, 1], [-1, 2, 1, 0, 2], [-2, 4, 2, 1, 1], [3, 1, 0.4, -0.5, 1]]],
-    'budgets' : [3],
-}
-prices = [1, 2, 3, 2, 1]
-j = 0
+# Sample data (very basic)
+# data = {
+#     'valuations': [[1, 1, 3, 4, 0]],
+#     'm' : 5,
+#     'c_types' : [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0,0,1],[0,0,1]],
+#     'maxes' : [0, 1, 2],
+#     'c_times':[[]],
+#     'etas':[[[0.3, 0.5, -0.2, 0, 1], [0.2, 0.3, 0, 0, 1], [-1, 2, 1, 0, 2], [-2, 4, 2, 1, 1], [3, 1, 0.4, -0.5, 1]]],
+#     'budgets' : [3],
+# }
+# prices = [1, 2, 3, 2, 1]
+# j = 0
 
-print("Selected Courses: ", compute_demand(prices, data, j))
+# print("Selected Courses: ", compute_demand(prices, data, j))
