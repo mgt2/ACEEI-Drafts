@@ -1,6 +1,5 @@
 import gurobipy as gp
 from gurobipy import GRB
-import numpy as np
 
 # Computes the demand LP function
 # Takes in as parameters a set of prices and the data_struct from generate.py, 
