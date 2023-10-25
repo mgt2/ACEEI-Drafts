@@ -12,8 +12,10 @@ def compute_demand(prices, data, j) :
     x = model.addVars(m, vtype=GRB.BINARY, name="x")
 
     # Sets objective
-    model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)), sense=GRB.MAXIMIZE) # + gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i,k in range(m)), sense=GRB.MAXIMIZE)
-
+    #model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) + gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)), sense=GRB.MAXIMIZE) # + gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i,k in range(m)), sense=GRB.MAXIMIZE)
+    model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) +
+                   gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)),
+                   sense=GRB.MAXIMIZE)
     # Courses cannot exceed budget of agent
     model.addConstr(gp.quicksum(x[i] * prices[i] for i in range(m)) <= data['budgets'][j])
 
@@ -41,7 +43,7 @@ data = {
     'c_types' : [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0,0,1],[0,0,1]],
     'maxes' : [0, 1, 2],
     'c_times':[[]],
-    'etas':[[0.3, 0.5, -0.2, 0, 1]],
+    'etas':[[[0.3, 0.5, -0.2, 0, 1], [0.2, 0.3, 0, 0, 1], [-1, 2, 1, 0, 2], [-2, 4, 2, 1, 1], [3, 1, 0.4, -0.5, 1]]],
     'budgets' : [3],
 }
 prices = [1, 2, 3, 2, 1]
