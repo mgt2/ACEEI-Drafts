@@ -1,6 +1,7 @@
 import numpy as np
 from generate import *
 from node import *
+from price_adjustment import *
 import gurobipy
 
 gurobipy.setParam("TokenFile", "gurobi.lic")
@@ -9,16 +10,16 @@ def random_start_point(m, k) :
     start_prices = np.random.rand(m) * 100 / k
     return Node.create(start_prices)
 
-def neighbors(curnode, seats, gradientw):
+def neighbors(curnode, seats, gradientw_prob):
     demand = curnode.calculate_demand()
     
     # Calculating gradient
-    if random.rand() < gradientw :
+    if random.rand() < gradientw_prob :
         gradient = np.where(curnode.prices > 0, demand - seats, max(0, demand - seats))
         return gradient
     
     # Calculating individual adjustment
-    individual_adj = adjust_prices(curnode, )
+    individual_adj = adjust_prices(curnode, demand, seats, 1e-5)
 
     return individual_adj
 
