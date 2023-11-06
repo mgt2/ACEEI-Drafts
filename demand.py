@@ -1,5 +1,6 @@
 import gurobipy as gp
 from gurobipy import GRB
+gp.setParam("TokenFile", "gurobi.lic")
 
 # Computes the demand LP function
 # Takes in as parameters a set of prices and the data_struct from generate.py, 
@@ -26,6 +27,9 @@ def compute_demand(prices, data, j) :
     for k in range(len(data['c_times'][0])) :
         for l in range(len(data['c_times'][0][k])) :
             model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
+
+    # Student is enrolled in enough courses
+    model.addConstr(gp.quicksum(x[i] for i in range(m) >= data['min_courses']))
 
     # Optimize the model
     model.optimize()

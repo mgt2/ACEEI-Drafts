@@ -1,6 +1,7 @@
 import numpy as np
 import gurobipy as gp
 from gurobipy import GRB
+gp.setParam("TokenFile", "gurobi.lic")
 
 def find_max_exclude (node, w, j) :
     m = node.data["m"]
@@ -28,6 +29,9 @@ def find_max_exclude (node, w, j) :
 
     # Cannot be course w
     model.addConstr(x[w] == 0, name=f"force_x_{w}_to_0")
+
+    # Student is enrolled in enough courses
+    model.addConstr(gp.quicksum(x[i] for i in range(m) >= data['min_courses']))
 
     # Optimize the model
     model.optimize()
@@ -66,6 +70,9 @@ def find_min_include(node, j, i, opt_without) :
 
     # Constraint: Course j must be chosen
     model.addConstr(x[j] == 1)
+
+    # Student is enrolled in enough courses
+    model.addConstr(gp.quicksum(x[k] for k in range(m) >= data['min_courses']))
 
     # Optimize
     model.optimize()

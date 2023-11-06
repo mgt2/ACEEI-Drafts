@@ -58,6 +58,7 @@ def generate_constraints(m, class_days, class_times, minl, l, t, all=False) :
     types = np.array(np.random.randint(0, t, size=(1, m))[0])
     maxes = np.random.randint(minl, l, size= (1, t))[0]
 
+ 
     
     if all :
         return tuples, days, np.array(types), maxes
@@ -89,21 +90,23 @@ def generate_courses(m, class_days, class_times, minl, l, t) :
 
 # Gathers all data into a struct, for easier use in the A-CEEI mechanism
 def get_data_struct (data):
-    valuations = generate_valuations(data.n, data.m, data.k)
-    budgets = generate_budgets(data.n, data.k)
-    etas = generate_etas(data.n, data.m)
-    courses, c_times, c_types, maxes = generate_courses(data.m, data.class_days, data.class_times, data.minl, data.l, data.t)
+    valuations = generate_valuations(data['n'], data['m'], data['k'])
+    budgets = generate_budgets(data['n'], data['k'])
+    etas = generate_etas(data['n'], data['m'])
+    courses, c_times, c_types, maxes = generate_courses(data['m'], data['class_days'], data['class_times'], data['minl'], data['l'], data['t'])
 
     data_struct = {
-        'n' : data.n,
-        'm' : data.m,
+        'n' : data['n'],
+        'm' : data['m'],
+        'k' : data['k'],
         'valuations': valuations,
         'budgets':budgets,
         'etas': etas,
         'courses':courses,
         'maxes':maxes,
         'c_times': c_times,
-        'c_types':c_types
+        'c_types':c_types,
+        'min_courses': data['l']
     }
     return data_struct
 

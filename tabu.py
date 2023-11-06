@@ -8,7 +8,7 @@ gurobipy.setParam("TokenFile", "gurobi.lic")
 
 def random_start_point(m, k) :
     start_prices = np.random.rand(m) * 100 / k
-    return Node.create(start_prices)
+    return start_prices
 
 def neighbors(curnode, seats, gradientw_prob):
     demand = curnode.calculate_demand()
@@ -25,10 +25,13 @@ def neighbors(curnode, seats, gradientw_prob):
 
  
 
-def tabu (m, k, bound, t, seats, model=None) :
+def tabu (data, bound, seats, model=None) :
     model = gurobipy.model()
+    m = data['m']
+    k = data['k']
+    t = data['t']
     q = np.array([])
-    curnode = random_start_point(m, k)
+    curnode = Node.create(random_start_point(m, k), data)
     bestnode = curnode
 
     while bestnode > bound :
@@ -46,4 +49,4 @@ def tabu (m, k, bound, t, seats, model=None) :
         if curnode.score() < bestnode.score() :
             bestnode = curnode
     model.dispose()
-    return
+    return bestnode
