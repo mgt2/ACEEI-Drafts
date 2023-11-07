@@ -93,13 +93,14 @@ def adjust_prices(curnode, demand, seats, epsilon) :
     minprice = 1000 # Larger than any price should be
     oversubscribed = np.where(demand - seats > 0, True, False)
     budgets = curnode.data['budgets']
-    new_prices = np.array([])
-    new_node = Node()
-    new_node.create(new_prices, seats, curnode.data)
+    neighbors = np.array([])
     for j in range(len(curnode.prices)) :
         minprice = 1000
         changed = False
-        new_prices = np.append(new_prices, curnode.prices[j])
+
+        new_node = Node()
+        new_node.create(curnode.prices.copy(), seats, curnode.data)
+        
         if oversubscribed[j] == True:
             for i in range(len(budgets)) :
                 if curnode.courses[i][j] == 1:
@@ -111,7 +112,20 @@ def adjust_prices(curnode, demand, seats, epsilon) :
                         minprice = price
                         changed = True
         if changed : 
-            new_prices[j] += minprice
-            demand = curnode.calculate_demand() # Recalculate optimal courses
-            oversubscribed = np.where(demand - seats > 0, True, False)
-    return new_prices
+            new_node.prices[j] += minprice
+        neighbors = np.append(neighbors, new_node)
+    
+    return neighbors
+
+
+# Adjusts prices with gradient
+def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
+    gradient_node = Node()
+    neighbors = np.array([])
+    for i in range(len(max_change_vals)) :
+        gradient_node = Node()
+        c = max_change_vals[i] / np.max(np.abs(gradient * node.prices))
+        new_prices = node.prices + c * gradient * node.prices
+        gradient_node.create(new_prices, seats, node.data)
+        neighbors = np.append(neighbors, gradient_node)
+    return neighbors
