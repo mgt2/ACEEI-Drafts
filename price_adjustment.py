@@ -1,6 +1,7 @@
 import numpy as np
 import gurobipy as gp
 from gurobipy import GRB
+from node import *
 gp.setParam("TokenFile", "gurobi.lic")
 
 def find_max_exclude (node, w, j) :
@@ -92,9 +93,13 @@ def adjust_prices(curnode, demand, seats, epsilon) :
     minprice = 1000 # Larger than any price should be
     oversubscribed = np.where(demand - seats > 0, True, False)
     budgets = curnode.data['budgets']
+    new_prices = np.array([])
+    new_node = Node()
+    new_node.create(new_prices, seats, curnode.data)
     for j in range(len(curnode.prices)) :
         minprice = 1000
         changed = False
+        new_prices = np.append(new_prices, curnode.prices[j])
         if oversubscribed[j] == True:
             for i in range(len(budgets)) :
                 if curnode.courses[i][j] == 1:
@@ -106,5 +111,7 @@ def adjust_prices(curnode, demand, seats, epsilon) :
                         minprice = price
                         changed = True
         if changed : 
+            new_prices[j] += minprice
             demand = curnode.calculate_demand() # Recalculate optimal courses
             oversubscribed = np.where(demand - seats > 0, True, False)
+    return new_prices

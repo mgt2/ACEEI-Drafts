@@ -29,7 +29,7 @@ def compute_demand(prices, data, j) :
             model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
 
     # Student is enrolled in enough courses
-    model.addConstr(gp.quicksum(x[i] for i in range(m) >= data['min_courses']))
+    model.addConstr(gp.quicksum(x[i] for i in range(m)) >= data['min_courses'])
 
     # Optimize the model
     model.optimize()
