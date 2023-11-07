@@ -18,6 +18,9 @@ class Node :
         self.prices = prices
         self.seats = seats
         self.data = data
+        self.courses = np.array([])
+        for i in range(self.data['n']) :
+            self.courses = np.append(self.courses, compute_demand(self.prices, self.data, i))
         return
     
     def calculate_demand(self) :
