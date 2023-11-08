@@ -1,5 +1,6 @@
 import gurobipy as gp
 from gurobipy import GRB
+import numpy as np
 gp.setParam("TokenFile", "gurobi.lic")
 
 # Computes the demand LP function
@@ -41,7 +42,7 @@ def compute_demand(prices, data, j) :
     return selected_courses
 
 
-# Sample data (very basic)
+# # Sample data (very basic)
 # data = {
 #     'valuations': [[1, 1, 3, 4, 0]],
 #     'm' : 5,
@@ -50,8 +51,21 @@ def compute_demand(prices, data, j) :
 #     'c_times':[[]],
 #     'etas':[[[0.3, 0.5, -0.2, 0, 1], [0.2, 0.3, 0, 0, 1], [-1, 2, 1, 0, 2], [-2, 4, 2, 1, 1], [3, 1, 0.4, -0.5, 1]]],
 #     'budgets' : [3],
+#     'min_courses': 2,
 # }
 # prices = [1, 2, 3, 2, 1]
 # j = 0
 
 # print("Selected Courses: ", compute_demand(prices, data, j))
+
+# # Number of iterations
+# num_iterations = 5
+
+# # Create an empty 2D array
+# courses = np.empty((0, 5), dtype=int)
+
+# # Iterate and stack arrays vertically
+# for _ in range(num_iterations):
+#     courses = np.vstack((courses, compute_demand(prices, data, j)))
+
+# print("Courses:\n", courses)

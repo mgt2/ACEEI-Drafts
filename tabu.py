@@ -37,7 +37,7 @@ def neighbors(curnode, seats):
 
  
 
-def tabu (data, bound, seats, max_runs) :
+def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
     m = data['m']
     k = data['k']
     t = data['t']
@@ -48,9 +48,8 @@ def tabu (data, bound, seats, max_runs) :
     bestnode = curnode
     best_score = curnode.score()
 
-    max_iters = max_runs
 
-    while best_score > bound and max_iters > 0:
+    while best_score > bound and max_runs > 0 and max_iters > 0:
         q = np.append(q, curnode)
         if (len(q) == t) :
             q = q[1:]
@@ -104,5 +103,7 @@ def tabu (data, bound, seats, max_runs) :
             print()
             print()
         else :
-            max_iters -= 1
+            max_runs -= 1
+        max_iters -=1
+        
     return bestnode
