@@ -50,15 +50,18 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
 
     with open('draft_output.txt', 'w') as file:
         file.write(f"Entering loop\n")
+        print("Entering loop!")
         while best_score > bound and max_runs > 0 and max_iters > 0:
             q = np.append(q, curnode)
             if (len(q) == t) :
                 q = q[1:]
             file.write(f"Finding neighbors\n")
+            print("Finding neighbors")
 
             n, scores = neighbors(curnode, seats)
 
             file.write(f"Neighbors found!\n")
+            print("Neighbors found!")
 
             best_neighbor_score = scores[0]
             while np.isin(n[0], q) :
@@ -74,12 +77,15 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
                 bestnode = curnode
                 best_score = best_neighbor_score
 
-                file.write(f"Score improved!\n")
+                file.write(f"Score improved! {best_score}\n")
+                print("New score: ", best_score)
 
             else :
                 max_runs -= 1
                 file.write(f"Max runs remaining: {max_runs}")
+                print("Max runs remaining: ", max_runs)
             max_iters -=1
             file.write(f"Max iters remaining: {max_iters}\n\n")
+            print("Max iters remaining: ", max_iters)
         
     return bestnode
