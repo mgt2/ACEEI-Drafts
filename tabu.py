@@ -48,62 +48,38 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
     bestnode = curnode
     best_score = curnode.score()
 
+    with open('draft_output.txt', 'w') as file:
+        file.write(f"Entering loop\n")
+        while best_score > bound and max_runs > 0 and max_iters > 0:
+            q = np.append(q, curnode)
+            if (len(q) == t) :
+                q = q[1:]
+            file.write(f"Finding neighbors\n")
 
-    while best_score > bound and max_runs > 0 and max_iters > 0:
-        q = np.append(q, curnode)
-        if (len(q) == t) :
-            q = q[1:]
-        print()
-        print()
-        print()
-        print()
-        print()
-        print("FINDING NEIGHBORS")
-        print()
-        print()
-        print()
-        print()
-        print()
+            n, scores = neighbors(curnode, seats)
 
-        n, scores = neighbors(curnode, seats)
+            file.write(f"Neighbors found!\n")
 
-        print()
-        print()
-        print()
-        print()
-        print()
-        print("NEIGHBORS FOUND")
-        print()
-        print()
-        print()
-        print()
-        print()
-        best_neighbor_score = scores[0]
-        while np.isin(n[0], q) :
-            if (len(n) > 1) :
-                n = n[1:]
-                scores = scores[1:]
-                curnode = n[0]
-                best_neighbor_score = scores[0]
+            best_neighbor_score = scores[0]
+            while np.isin(n[0], q) :
+                if (len(n) > 1) :
+                    n = n[1:]
+                    scores = scores[1:]
+                    curnode = n[0]
+                    best_neighbor_score = scores[0]
+                else :
+                    n = []
+                    break
+            if best_neighbor_score < best_score :
+                bestnode = curnode
+                best_score = best_neighbor_score
+
+                file.write(f"Score improved!\n")
+
             else :
-                n = []
-                break
-        if best_neighbor_score < best_score :
-            bestnode = curnode
-            best_score = best_neighbor_score
-            print()
-            print()
-            print()
-            print()
-            print()
-            print("SCORE IMPROVED")
-            print()
-            print()
-            print()
-            print()
-            print()
-        else :
-            max_runs -= 1
-        max_iters -=1
+                max_runs -= 1
+                file.write(f"Max runs remaining: {max_runs}")
+            max_iters -=1
+            file.write(f"Max iters remaining: {max_iters}\n\n")
         
     return bestnode

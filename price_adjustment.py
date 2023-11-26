@@ -34,6 +34,9 @@ def find_max_exclude (node, w, j) :
     # Student is enrolled in enough courses
     model.addConstr(gp.quicksum(x[i] for i in range(m)) >= data['min_courses'])
 
+    # Don't print solver
+    model.setParam('OutputFlag', 0)
+    
     # Optimize the model
     model.optimize()
 
@@ -56,7 +59,7 @@ def find_min_include(node, j, i, opt_without) :
     model.setObjective(gp.quicksum(x[k] * prices[k] for k in range(m)), sense=GRB.MINIMIZE)
 
     # Constraint: must have greater preference than maximum without course j
-    model.addConstr(gp.quicksum(x[k] * data['valuations'][i][k] for k in range(m)) + gp.quicksum((l < k) * x[l] * x[k] * data['etas'][i][l][k] for l in range(m) for k in range(m)) > opt_without)
+    model.addConstr(gp.quicksum(x[k] * data['valuations'][i][k] for k in range(m)) + gp.quicksum((l < k) * x[l] * x[k] * data['etas'][i][l][k] for l in range(m) for k in range(m)) >= opt_without + 1e-10)
     
     # Constraint: Courses must satisfy time and type constraints
     # Type constraints must be satisfied
@@ -73,6 +76,9 @@ def find_min_include(node, j, i, opt_without) :
 
     # Student is enrolled in enough courses
     model.addConstr(gp.quicksum(x[k] for k in range(m)) >= data['min_courses'])
+
+    # Don't print solver
+    model.setParam('OutputFlag', 0)
 
     # Optimize
     model.optimize()

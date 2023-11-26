@@ -32,6 +32,9 @@ def compute_demand(prices, data, j) :
     # Student is enrolled in enough courses
     model.addConstr(gp.quicksum(x[i] for i in range(m)) >= data['min_courses'])
 
+    # Don't print solver
+    model.setParam('OutputFlag', 0)
+
     # Optimize the model
     model.optimize()
 
