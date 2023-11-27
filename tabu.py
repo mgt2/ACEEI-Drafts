@@ -73,6 +73,9 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
                 else :
                     n = []
                     break
+            print("Best score: ", best_score)
+            print("Best neighbor score: ", best_neighbor_score)
+            print("Bound to beat: ", bound)
             if best_neighbor_score < best_score :
                 bestnode = curnode
                 best_score = best_neighbor_score
