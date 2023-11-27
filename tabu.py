@@ -51,7 +51,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
     with open('draft_output.txt', 'w') as file:
         file.write("Entering loop! ")
         print("Entering loop!")
-        while best_score > bound and max_runs > 0 and max_iters > 0:
+        while (best_score > bound or max_runs > 0) and max_iters > 0:
             q = np.append(q, curnode)
             if (len(q) == t) :
                 q = q[1:]
@@ -79,8 +79,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000) :
 
                 file.write("Score improved! {best_score}\n")
                 print("New score: ", best_score)
-
-            else :
+            elif best_score < bound :
                 max_runs -= 1
                 file.write("Max runs remaining: {max_runs}")
                 print("Max runs remaining: ", max_runs)
