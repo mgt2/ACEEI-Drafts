@@ -16,7 +16,7 @@ n = 50
 m = 10
 l = 5
 k = 5
-seats = np.full(m, 10) # as done in Othman paper
+seats = np.full(m, 27) # as done in Othman paper
 
 
 # valuations = generate_valuations(n, m, l)

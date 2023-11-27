@@ -65,7 +65,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
             print("Neighbors found!")
 
             best_neighbor_score = scores[0]
-            print(n[0])
+            print(n)
             print(q)
             while np.isin(n[0], q) :
                 print("HERE")
@@ -85,14 +85,14 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
                 best_score = best_neighbor_score
                 q = np.append(q, curnode)
 
-                file.write("Score improved! {best_score}\n")
+                file.write("Score improved! " + str(best_score))
                 print("New score: ", best_score)
             elif best_score < bound :
                 max_runs -= 1
-                file.write("Max runs remaining: {max_runs}")
+                file.write("Max runs remaining: " + str(max_runs))
                 print("Max runs remaining: ", max_runs)
             max_iters -=1
-            file.write("Max iters remaining: {max_iters}\n\n")
+            file.write("Max iters remaining: " + str(max_iters) + "\n\n")
             print("Max iters remaining: ", max_iters)
         
     return bestnode
