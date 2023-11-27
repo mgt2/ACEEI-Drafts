@@ -43,11 +43,13 @@ def compute_demand(prices, data, j) :
     status = model.status
     if status == GRB.OPTIMAL:
         selected_courses = [int(x[i].x) for i in range(m)]
+        model.dispose()
+        return selected_courses
     else:
         print(f"Optimization status: {status}")
     model.dispose()
+    return RuntimeError
 
-    return selected_courses
 
 
 # # Sample data (very basic)

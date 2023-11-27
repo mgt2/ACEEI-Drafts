@@ -1,0 +1,27 @@
+Entering loop! Finding neighbors! Neighbors found! Score improved! 40.95119045888654Max iters remaining: 99
+
+Finding neighbors! Neighbors found! Score improved! 40.26164427839479Max iters remaining: 98
+
+Finding neighbors! Neighbors found! Max iters remaining: 97
+
+Finding neighbors! Neighbors found! Max iters remaining: 96
+
+Finding neighbors! Neighbors found! Max iters remaining: 95
+
+Finding neighbors! Neighbors found! Max iters remaining: 94
+
+Finding neighbors! Neighbors found! Max iters remaining: 93
+
+Finding neighbors! Neighbors found! Max iters remaining: 92
+
+Finding neighbors! Neighbors found! Max iters remaining: 91
+
+Finding neighbors! Neighbors found! Max iters remaining: 90
+
+Finding neighbors! Neighbors found! Max iters remaining: 89
+
+Finding neighbors! Neighbors found! Max iters remaining: 88
+
+Finding neighbors! Neighbors found! Score improved! 39.230090491866065Max iters remaining: 87
+
+Finding neighbors! 

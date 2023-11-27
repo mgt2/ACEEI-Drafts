@@ -42,18 +42,23 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
     k = data['k']
     t = data['t']
     q = np.array([])
+    qscore = np.array([])
     start_prices = random_start_point(m, k)
     curnode = Node()
     curnode.create(start_prices, seats, data)
     bestnode = curnode
     best_score = curnode.score()
+    curscore = best_score
 
     with open('draft_output.txt', 'w') as file:
         file.write("Entering loop! ")
         print("Entering loop!")
         while (best_score > bound or max_runs > 0) and max_iters > 0:
+            q = np.append(q, curnode)
+            qscore = np.append(qscore, curscore)
             if (len(q) == t) :
                 q = q[1:]
+                qscore = qscore[1:]
             file.write("Finding neighbors! ")
             print("Finding neighbors")
 
@@ -67,7 +72,8 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
             best_neighbor_score = scores[0]
             print(n)
             print(q)
-            while np.isin(n[0], q) :
+            curnode = n[0]
+            while np.isin(scores[0], qscore) :
                 print("HERE")
                 if (len(n) > 1) :
                     curnode = n[1]
@@ -77,13 +83,13 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
                 else :
                     n = []
                     break
-            print("Best node: ", bestnode)
-            print("Best neighbor score: ", curnode)
+            curscore = best_neighbor_score
+            print("Best node: ", best_score)
+            print("Best neighbor score: ", best_neighbor_score)
             print("Bound to beat: ", bound)
             if best_neighbor_score < best_score :
                 bestnode = curnode
                 best_score = best_neighbor_score
-                q = np.append(q, curnode)
 
                 file.write("Score improved! " + str(best_score))
                 print("New score: ", best_score)
