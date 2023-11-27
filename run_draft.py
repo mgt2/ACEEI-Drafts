@@ -48,4 +48,5 @@ bound = (k * m / 2)**(1/2)
 
 bestnode = tabu(data_struct, bound, seats, 100)
 
-print(bestnode.prices)
+print("Final prices: ", bestnode.prices)
+print("Score: ", bestnode.score())
