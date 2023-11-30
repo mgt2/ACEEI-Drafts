@@ -5,8 +5,16 @@ import gurobipy
 gurobipy.setParam("TokenFile", "gurobi.lic")
 
 # Generates n student valuations of m courses
-def generate_valuations(n, m, k) :
-    return np.random.rand(n, m) * 100 / k
+def generate_valuations(n, m, budgets) :
+    valuations = np.zeros((n, m))
+    for i in range(n):
+        # Generate random valuations for each course
+        raw_valuations = np.random.rand(m)
+        
+        # Scale the valuations to sum up to the corresponding budget
+        scaling_factor = budgets[i] / raw_valuations.sum()
+        valuations[i] = raw_valuations * scaling_factor
+    return valuations
 
 # Generates budgets
 def generate_budgets(n, k) :
@@ -92,8 +100,8 @@ def generate_courses(m, class_days, class_times, minl, l, t) :
 
 # Gathers all data into a struct, for easier use in the A-CEEI mechanism
 def get_data_struct (data):
-    valuations = generate_valuations(data['n'], data['m'], data['k'])
     budgets = generate_budgets(data['n'], data['k'])
+    valuations = generate_valuations(data['n'], data['m'], budgets)
     etas = generate_etas(data['n'], data['m'])
     courses, c_times, c_types, maxes = generate_courses(data['m'], data['class_days'], data['class_times'], data['minl'], data['l'], data['t'])
 
@@ -112,6 +120,5 @@ def get_data_struct (data):
         'min_courses': data['l']
     }
     return data_struct
-
 
 
