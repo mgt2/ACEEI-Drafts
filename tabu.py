@@ -37,10 +37,9 @@ def neighbors(curnode, seats):
 
  
 
-def tabu (data, bound, seats, max_runs=100, max_iters=100) :
+def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
     m = data['m']
     k = data['k']
-    t = data['t']
     q = np.array([])
     qscore = np.array([])
     start_prices = random_start_point(m, k)
@@ -53,12 +52,14 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
     with open('draft_output.txt', 'w') as file:
         file.write("Entering loop! ")
         print("Entering loop!")
+        print("Q-size:", q_size)
         while (best_score > bound or max_runs > 0) and max_iters > 0:
             q = np.append(q, curnode)
             qscore = np.append(qscore, curscore)
-            if (len(q) == t) :
+            if (len(q) >= q_size) :
                 q = q[1:]
                 qscore = qscore[1:]
+                print("Evicting...")
             file.write("Finding neighbors! ")
             print("Finding neighbors")
 
@@ -100,5 +101,5 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100) :
             max_iters -=1
             file.write("Max iters remaining: " + str(max_iters) + "\n\n")
             print("Max iters remaining: ", max_iters)
-        
+        print("Q-size:", q_size)
     return bestnode
