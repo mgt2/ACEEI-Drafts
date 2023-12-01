@@ -1,0 +1,202 @@
+Entering loop! Finding neighbors! Neighbors found! Score improved! 25.612496949731394Max iters remaining: 99
+
+Finding neighbors! Neighbors found! Score improved! 20.518284528683193Max iters remaining: 98
+
+Finding neighbors! Neighbors found! Score improved! 14.832396974191326Max iters remaining: 97
+
+Finding neighbors! Neighbors found! Score improved! 14.696938456699069Max iters remaining: 96
+
+Finding neighbors! Neighbors found! Score improved! 14.560219778561036Max iters remaining: 95
+
+Finding neighbors! Neighbors found! Max iters remaining: 94
+
+Finding neighbors! Neighbors found! Score improved! 12.165525060596439Max iters remaining: 93
+
+Finding neighbors! Neighbors found! Max iters remaining: 92
+
+Finding neighbors! Neighbors found! Max iters remaining: 91
+
+Finding neighbors! Neighbors found! Max iters remaining: 90
+
+Finding neighbors! Neighbors found! Max iters remaining: 89
+
+Finding neighbors! Neighbors found! Score improved! 12.0Max iters remaining: 88
+
+Finding neighbors! Neighbors found! Score improved! 9.273618495495704Max iters remaining: 87
+
+Finding neighbors! Neighbors found! Max iters remaining: 86
+
+Finding neighbors! Neighbors found! Max iters remaining: 85
+
+Finding neighbors! Neighbors found! Max iters remaining: 84
+
+Finding neighbors! Neighbors found! Max iters remaining: 83
+
+Finding neighbors! Neighbors found! Max iters remaining: 82
+
+Finding neighbors! Neighbors found! Score improved! 8.246211251235321Max iters remaining: 81
+
+Finding neighbors! Neighbors found! Max iters remaining: 80
+
+Finding neighbors! Neighbors found! Max iters remaining: 79
+
+Finding neighbors! Neighbors found! Max iters remaining: 78
+
+Finding neighbors! Neighbors found! Max iters remaining: 77
+
+Finding neighbors! Neighbors found! Max iters remaining: 76
+
+Finding neighbors! Neighbors found! Max iters remaining: 75
+
+Finding neighbors! Neighbors found! Max iters remaining: 74
+
+Finding neighbors! Neighbors found! Max iters remaining: 73
+
+Finding neighbors! Neighbors found! Max iters remaining: 72
+
+Finding neighbors! Neighbors found! Max iters remaining: 71
+
+Finding neighbors! Neighbors found! Max iters remaining: 70
+
+Finding neighbors! Neighbors found! Max iters remaining: 69
+
+Finding neighbors! Neighbors found! Max iters remaining: 68
+
+Finding neighbors! Neighbors found! Max iters remaining: 67
+
+Finding neighbors! Neighbors found! Max iters remaining: 66
+
+Finding neighbors! Neighbors found! Max iters remaining: 65
+
+Finding neighbors! Neighbors found! Max iters remaining: 64
+
+Finding neighbors! Neighbors found! Max iters remaining: 63
+
+Finding neighbors! Neighbors found! Max iters remaining: 62
+
+Finding neighbors! Neighbors found! Max iters remaining: 61
+
+Finding neighbors! Neighbors found! Max iters remaining: 60
+
+Finding neighbors! Neighbors found! Max iters remaining: 59
+
+Finding neighbors! Neighbors found! Max iters remaining: 58
+
+Finding neighbors! Neighbors found! Max iters remaining: 57
+
+Finding neighbors! Neighbors found! Max iters remaining: 56
+
+Finding neighbors! Neighbors found! Max iters remaining: 55
+
+Finding neighbors! Neighbors found! Max iters remaining: 54
+
+Finding neighbors! Neighbors found! Max iters remaining: 53
+
+Finding neighbors! Neighbors found! Max iters remaining: 52
+
+Finding neighbors! Neighbors found! Max iters remaining: 51
+
+Finding neighbors! Neighbors found! Score improved! 7.874007874011811Max iters remaining: 50
+
+Finding neighbors! Neighbors found! Max iters remaining: 49
+
+Finding neighbors! Neighbors found! Max iters remaining: 48
+
+Finding neighbors! Neighbors found! Max iters remaining: 47
+
+Finding neighbors! Neighbors found! Max iters remaining: 46
+
+Finding neighbors! Neighbors found! Max iters remaining: 45
+
+Finding neighbors! Neighbors found! Score improved! 7.483314773547883Max iters remaining: 44
+
+Finding neighbors! Neighbors found! Max iters remaining: 43
+
+Finding neighbors! Neighbors found! Max iters remaining: 42
+
+Finding neighbors! Neighbors found! Max iters remaining: 41
+
+Finding neighbors! Neighbors found! Max iters remaining: 40
+
+Finding neighbors! Neighbors found! Max iters remaining: 39
+
+Finding neighbors! Neighbors found! Max iters remaining: 38
+
+Finding neighbors! Neighbors found! Max iters remaining: 37
+
+Finding neighbors! Neighbors found! Max iters remaining: 36
+
+Finding neighbors! Neighbors found! Max iters remaining: 35
+
+Finding neighbors! Neighbors found! Max iters remaining: 34
+
+Finding neighbors! Neighbors found! Max iters remaining: 33
+
+Finding neighbors! Neighbors found! Max iters remaining: 32
+
+Finding neighbors! Neighbors found! Max iters remaining: 31
+
+Finding neighbors! Neighbors found! Max iters remaining: 30
+
+Finding neighbors! Neighbors found! Max iters remaining: 29
+
+Finding neighbors! Neighbors found! Max iters remaining: 28
+
+Finding neighbors! Neighbors found! Max iters remaining: 27
+
+Finding neighbors! Neighbors found! Max iters remaining: 26
+
+Finding neighbors! Neighbors found! Max iters remaining: 25
+
+Finding neighbors! Neighbors found! Max iters remaining: 24
+
+Finding neighbors! Neighbors found! Max iters remaining: 23
+
+Finding neighbors! Neighbors found! Max iters remaining: 22
+
+Finding neighbors! Neighbors found! Max iters remaining: 21
+
+Finding neighbors! Neighbors found! Max iters remaining: 20
+
+Finding neighbors! Neighbors found! Max iters remaining: 19
+
+Finding neighbors! Neighbors found! Max iters remaining: 18
+
+Finding neighbors! Neighbors found! Max iters remaining: 17
+
+Finding neighbors! Neighbors found! Max iters remaining: 16
+
+Finding neighbors! Neighbors found! Max iters remaining: 15
+
+Finding neighbors! Neighbors found! Max iters remaining: 14
+
+Finding neighbors! Neighbors found! Max iters remaining: 13
+
+Finding neighbors! Neighbors found! Max iters remaining: 12
+
+Finding neighbors! Neighbors found! Max iters remaining: 11
+
+Finding neighbors! Neighbors found! Max iters remaining: 10
+
+Finding neighbors! Neighbors found! Max iters remaining: 9
+
+Finding neighbors! Neighbors found! Max iters remaining: 8
+
+Finding neighbors! Neighbors found! Max iters remaining: 7
+
+Finding neighbors! Neighbors found! Max iters remaining: 6
+
+Finding neighbors! Neighbors found! Max iters remaining: 5
+
+Finding neighbors! Neighbors found! Max iters remaining: 4
+
+Finding neighbors! Neighbors found! Max iters remaining: 3
+
+Finding neighbors! Neighbors found! Max iters remaining: 2
+
+Finding neighbors! Neighbors found! Max iters remaining: 1
+
+Finding neighbors! Neighbors found! Max iters remaining: 0
+
+
+Score: 7.483314773547883

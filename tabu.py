@@ -102,7 +102,6 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
             file.write("Max iters remaining: " + str(max_iters) + "\n\n")
             print("Max iters remaining: ", max_iters)
         print("Q-size:", q_size)
-        file.write("Final prices: ")
-        file.write((str(bestnode.prices[i]) + " " for i in range(n)))
         file.write("\nScore: " + str(best_score))
+        file.write("\nQ-size: " + str(q_size))
     return bestnode
