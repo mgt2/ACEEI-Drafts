@@ -23,6 +23,15 @@ class Node :
             self.courses = np.vstack((self.courses, compute_demand(self.prices, self.data, i)))
         return
     
+    def isEqual(self, node) :
+        if not np.array_equal(self.prices, node.prices) :
+            return False
+        if not self.score == node.score :
+            return False
+        if not np.array_equal(self.demand, node.demand) :
+            return False
+        return True
+    
     def calculate_demand(self) :
         self.courses = np.empty((0, self.data['m']), dtype=int)
         for i in range(self.data['n']) :

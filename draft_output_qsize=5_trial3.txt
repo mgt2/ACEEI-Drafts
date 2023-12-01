@@ -198,4 +198,5 @@ Finding neighbors! Neighbors found! Max runs remaining: 57Max iters remaining: 1
 
 Finding neighbors! Neighbors found! Max runs remaining: 56Max iters remaining: 0
 
-Final prices: 
+Score: 1.4142135623730951
+Q-size: 5

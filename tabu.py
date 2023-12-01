@@ -10,6 +10,12 @@ def random_start_point(m, k) :
     start_prices = np.random.rand(m) * 100 / k
     return start_prices
 
+def contains(node, nodelist) :
+    for n in nodelist :
+        if n.isEqual(node) :
+            return True
+    return False
+
 def neighbors(curnode, seats):
     demand = curnode.calculate_demand()
     
@@ -74,6 +80,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
             print(n)
             print(q)
             curnode = n[0]
+            # while contains(n[0], q)
             while np.isin(scores[0], qscore) :
                 print("HERE")
                 if (len(n) > 1) :
