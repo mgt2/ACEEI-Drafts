@@ -46,11 +46,7 @@ data_struct = get_data_struct(data)
 
 bound = (k * m / 2)**(1/2)
 
-bestnode = tabu(data_struct, bound, seats, 100, 100, q_size=100)
+bestnode = tabu(data_struct, bound, seats, 100, 100, q_size=5)
 
 print("Final prices: ", bestnode.prices)
 print("Score: ", bestnode.score())
-with open('draft_output.txt', 'w') as file:
-    file.write("Final prices:")
-    file.write(str(bestnode.prices[i] for i in range(n)) + " ")
-    file.write("\nScore:" + str(bestnode.score()))

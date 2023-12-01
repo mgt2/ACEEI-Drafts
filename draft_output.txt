@@ -1,1 +1,5 @@
-Final prices
+Entering loop! Finding neighbors! Neighbors found! Score improved! 47.62352359916263Max iters remaining: 99
+
+Finding neighbors! Neighbors found! Score improved! 46.411205543489174Max iters remaining: 98
+
+Finding neighbors! 

@@ -18,9 +18,9 @@ def neighbors(curnode, seats):
     max_change_vals = np.array([10, 5, 1, 0.5, 0.1])
     gradient_neighbors = adjust_gradient_prices(curnode, gradient, max_change_vals, seats)
     
-    # Calculating individual adjustment
-    #individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
-    individual_adj_neighbors = np.array([])
+    #Calculating individual adjustment
+    individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
+    # individual_adj_neighbors = np.array([])
     neighbors = np.append(gradient_neighbors, individual_adj_neighbors)
 
     # Extract scores from nodes and create an array
@@ -103,6 +103,6 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
             print("Max iters remaining: ", max_iters)
         print("Q-size:", q_size)
         file.write("Final prices: ")
-        file.write(str(bestnode.prices[i] for i in range(n)) + " ")
+        file.write((str(bestnode.prices[i]) + " " for i in range(n)))
         file.write("\nScore: " + str(best_score))
     return bestnode
