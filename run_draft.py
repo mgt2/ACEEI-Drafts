@@ -46,7 +46,7 @@ data_struct = get_data_struct(data)
 
 bound = (k * m / 2)**(1/2)
 
-bestnode = tabu(data_struct, bound, seats, 100, 100, q_size=5)
+bestnode = tabu(data_struct, bound, seats, 100, 100, q_size=100)
 
 print("Final prices: ", bestnode.prices)
 print("Score: ", bestnode.score())

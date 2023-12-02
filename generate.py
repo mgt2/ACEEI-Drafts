@@ -5,15 +5,26 @@ import gurobipy
 gurobipy.setParam("TokenFile", "gurobi.lic")
 
 # Generates n student valuations of m courses
-def generate_valuations(n, m, budgets) :
-    valuations = np.zeros((n, m))
-    for i in range(n):
-        # Generate random valuations for each course
-        raw_valuations = np.random.rand(m)
+# def generate_valuations(n, m, budgets) :
+#     valuations = np.zeros((n, m))
+#     for i in range(n):
+#         # Generate random valuations for each course
+#         raw_valuations = np.random.rand(m)
         
-        # Scale the valuations to sum up to the corresponding budget
-        scaling_factor = budgets[i] / raw_valuations.sum()
-        valuations[i] = raw_valuations * scaling_factor
+#         # Scale the valuations to sum up to the corresponding budget
+#         scaling_factor = budgets[i] / raw_valuations.sum()
+#         valuations[i] = raw_valuations * scaling_factor
+#     return valuations
+
+def generate_valuations(n, m, budgets) :
+    # Set the standard deviation
+    std_deviation = 10
+
+    # Draw 5 independent random samples from a normal distribution with mean 0
+    epsilon = np.random.normal(loc=0, scale=std_deviation, size=(n, m))
+
+    valuations = np.arange(n).reshape((n, 1)) + epsilon
+
     return valuations
 
 # Generates budgets

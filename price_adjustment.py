@@ -44,7 +44,7 @@ def find_max_exclude (node, w, j) :
         opt = model.objVal
         model.dispose()
         return opt
-
+    print(f"Optimization status: {model.status}")
     model.dispose()
     return RuntimeError
 
@@ -87,7 +87,7 @@ def find_min_include(node, j, i, opt_without) :
         opt = model.objVal
         model.dispose()
         return opt
-
+    print(f"Optimization status: {model.status}")
     model.dispose()
     return RuntimeError
 

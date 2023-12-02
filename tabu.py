@@ -80,7 +80,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
             print(n)
             print(q)
             curnode = n[0]
-            # while contains(n[0], q)
+            # while contains(n[0], q) :
             while np.isin(scores[0], qscore) :
                 print("HERE")
                 if (len(n) > 1) :
