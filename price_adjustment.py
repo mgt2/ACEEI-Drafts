@@ -32,7 +32,7 @@ def find_max_exclude (node, w, j) :
     model.addConstr(x[w] == 0, name=f"force_x_{w}_to_0")
 
     # Student is enrolled in enough courses
-    model.addConstr(gp.quicksum(x[i] for i in range(m)) >= data['min_courses'])
+    # model.addConstr(gp.quicksum(x[i] for i in range(m)) >= data['min_courses'])
 
     # Don't print solver
     model.setParam('OutputFlag', 0)
@@ -75,7 +75,7 @@ def find_min_include(node, j, i, opt_without) :
     model.addConstr(x[j] == 1)
 
     # Student is enrolled in enough courses
-    model.addConstr(gp.quicksum(x[k] for k in range(m)) >= data['min_courses'])
+    # model.addConstr(gp.quicksum(x[k] for k in range(m)) >= data['min_courses'])
 
     # Don't print solver
     model.setParam('OutputFlag', 0)

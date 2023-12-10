@@ -32,7 +32,7 @@ data = {
     'm': m,
     'k': k,
     'l': l,
-    'minl':1,
+    'minl':0,
     't' : 5,
     'class_days' : class_days,
     'class_times':class_times,
