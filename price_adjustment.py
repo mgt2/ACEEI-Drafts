@@ -213,10 +213,10 @@ def reduce_undersubscription(node, seats) :
     while not done :
         done = True
         for i in range(node.data['n']) :
-            new_courses = reoptimize(i, undersubscribed, node, old_courses)
-            if not np.array_equal(new_courses, old_courses) :
+            new_courses = reoptimize(i, undersubscribed, node, old_courses[i])
+            if not np.array_equal(new_courses, old_courses[i]) :
                 done = False
-                old_courses = new_courses
+                old_courses[i] = new_courses
                 break
         undersubscribed = get_undersubscribed(old_courses)
     return old_courses
