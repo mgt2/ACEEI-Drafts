@@ -144,7 +144,7 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
     j = np.argmax(oversubscribed)
     while np.max(oversubscribed) > 0 :
         d = int(0.5 * oversubscribed[j])
-        low_p = prices
+        low_p = prices[j]
         high_p = max_budget
 
         while high_p - low_p > epsilon :
@@ -161,8 +161,7 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
     return prices
 
 def reduce_undersubscription(node, seats) :
-    def reoptimize(i, undersubscribed, node) :
-        old_courses = node.courses
+    def reoptimize(i, undersubscribed, node, old_courses) :
         model = gp.Model("reoptimize")
         x = model.addVars(node.data['m'], vtype = GRB.BINARY, name="x")
         model.setObjective(gp.quicksum(x[j] * node.data['valuations'][i][j] for j in range(node.data['m'])) +
@@ -179,7 +178,11 @@ def reduce_undersubscription(node, seats) :
                 model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
         
         # Only undersubscribed courses can be changed
-        model.addConstr((x[j] - old_courses[j]) <= (undersubscribed[j] < 0) for j in range(node.data['m']))
+        for j in range(node.data['m']):
+            if undersubscribed[j] < 0:
+                model.addConstr(x[j] <= 1)
+            else :
+                model.addConstr(x[j] - old_courses[j] <= 0)
 
         # Don't print solver
         model.setParam('OutputFlag', 0)
@@ -206,13 +209,14 @@ def reduce_undersubscription(node, seats) :
     done = False
     demand = node.calculate_demand()
     undersubscribed = np.array(demand - seats)
+    old_courses = node.get_courses()
     while not done :
         done = True
         for i in range(node.data['n']) :
-            new_courses = reoptimize(i, undersubscribed, node)
-            if np.array_equal(new_courses, node.courses[i]) :
+            new_courses = reoptimize(i, undersubscribed, node, old_courses)
+            if not np.array_equal(new_courses, old_courses) :
                 done = False
-                node.courses[i] = new_courses
+                old_courses = new_courses
                 break
-        undersubscribed = get_undersubscribed(node.courses)
-    return node
+        undersubscribed = get_undersubscribed(old_courses)
+    return old_courses
