@@ -47,13 +47,13 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
     m = data['m']
     k = data['k']
     q = np.array([])
-    qscore = np.array([])
-    start_prices = random_start_point(m, np.max(data['budgets']))
-    curnode = Node()
-    curnode.create(start_prices, seats, data)
-    bestnode = curnode
-    best_score = curnode.score()
-    curscore = best_score
+    # qscore = np.array([])
+    # start_prices = random_start_point(m, np.max(data['budgets']))
+    # curnode = Node()
+    # curnode.create(start_prices, seats, data)
+    # bestnode = curnode
+    # best_score = curnode.score()
+    # curscore = best_score
 
     with open('draft_output.txt', 'w') as file:
         file.write("Entering loop! ")
