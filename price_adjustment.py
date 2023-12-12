@@ -160,7 +160,7 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
         j = np.argmax(oversubscribed)
     return prices
 
-def reduce_undersubscription(node, seats, students) :
+def reduce_undersubscription(node, seats) :
     def reoptimize(i, undersubscribed, node) :
         old_courses = node.courses
         model = gp.Model("reoptimize")
@@ -208,7 +208,7 @@ def reduce_undersubscription(node, seats, students) :
     undersubscribed = np.array(demand - seats)
     while not done :
         done = True
-        for i in range(len(students)) :
+        for i in range(node.data['n']) :
             new_courses = reoptimize(i, undersubscribed, node)
             if np.array_equal(new_courses, node.courses[i]) :
                 done = False

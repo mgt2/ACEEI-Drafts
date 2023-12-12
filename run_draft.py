@@ -52,3 +52,9 @@ bestnode = Node()
 bestnode.create(opt_prices, seats, data_struct)
 print("Final prices: ", opt_prices)
 print("Score: ", bestnode.score())
+
+new_prices = adjust_prices_half(opt_prices, np.max(data_struct['budgets']), 0.1, seats, data_struct)
+bestnode.prices = new_prices
+courses = reduce_undersubscription(bestnode, seats)
+print("Adjusted prices: ", bestnode.prices)
+print("Adjusted Score: ", bestnode.score())
