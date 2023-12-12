@@ -159,3 +159,60 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
         prices[j] = high_p
         j = np.argmax(oversubscribed)
     return prices
+
+def reduce_undersubscription(node, seats, students) :
+    def reoptimize(i, undersubscribed, node) :
+        old_courses = node.courses
+        model = gp.Model("reoptimize")
+        x = model.addVars(node.data['m'], vtype = GRB.BINARY, name="x")
+        model.setObjective(gp.quicksum(x[j] * node.data['valuations'][i][j] for j in range(node.data['m'])) +
+                   gp.quicksum((j < k) * x[j] * x[k] * node.data['etas'][i][j][k] for j in range(node.data['m']) for k in range(node.data['m'])),
+                   sense=GRB.MAXIMIZE)
+        
+        model.addConstr(gp.quicksum(x[j] * node.prices[j] for j in range(node.data['m'])) <= node.data['budgets'][i] * 1.1)
+        for k in range(len(node.data['c_types'][0])):
+            model.addConstr(gp.quicksum(x[j] * node.data['c_types'][j][k] for j in range(node.data['m'])) <= node.data['maxes'][k])
+
+        # Time constraints
+        for k in range(len(node.data['c_times'][0])) :
+            for l in range(len(node.data['c_times'][0][k])) :
+                model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
+        
+        # Only undersubscribed courses can be changed
+        model.addConstr((x[j] - old_courses[j]) <= (undersubscribed[j] < 0) for j in range(node.data['m']))
+
+        # Don't print solver
+        model.setParam('OutputFlag', 0)
+
+        # Optimize the model
+        model.optimize()
+
+
+        # Get the optimal solution
+        status = model.status
+        if status == GRB.OPTIMAL:
+            selected_courses = [int(x[i].x) for i in range(node.data['m'])]
+            model.dispose()
+            return selected_courses
+        else:
+            print(f"Optimization status: {status}")
+        model.dispose()
+        return RuntimeError
+
+    def get_undersubscribed(courses) :
+        undersubscribed = np.sum(courses)
+        return undersubscribed
+    
+    done = False
+    demand = node.calculate_demand()
+    undersubscribed = np.array(demand - seats)
+    while not done :
+        done = True
+        for i in range(len(students)) :
+            new_courses = reoptimize(i, undersubscribed, node)
+            if np.array_equal(new_courses, node.courses[i]) :
+                done = False
+                node.courses[i] = new_courses
+                break
+        undersubscribed = get_undersubscribed(node.courses)
+    return node

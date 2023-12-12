@@ -27,8 +27,11 @@ def neighbors(curnode, seats, data):
     
     #Calculating individual adjustment
     individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
-    # individual_adj_neighbors = np.array([])
+    individual_adj_neighbors = np.array([])
+
     neighbors = np.append(gradient_neighbors, individual_adj_neighbors)
+
+
 
     # Extract scores from nodes and create an array
     scores = np.array([node.score() for node in neighbors])
@@ -144,7 +147,9 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
                     if nscore < best_score :
                         best_score = nscore
                         opt_prices = prices
+                        file.write("Best score updated! Score is now " + str(best_score) + "\n")
         file.write("Prices: \n")
         for price in opt_prices :
             file.write(str(price) + "\n")
+        file.write("Score: " + str(best_score))
     return opt_prices
