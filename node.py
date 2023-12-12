@@ -23,6 +23,9 @@ class Node :
             self.courses = np.vstack((self.courses, compute_demand(self.prices, self.data, i)))
         return
     
+    def get_prices(self) :
+        return self.prices
+    
     def isEqual(self, node) :
         if not np.array_equal(self.prices, node.prices) :
             return False
