@@ -3,6 +3,7 @@ from generate import *
 from node import *
 from price_adjustment import *
 import gurobipy
+from tqdm import tqdm
 
 gurobipy.setParam("TokenFile", "gurobi.lic")
 
@@ -16,7 +17,7 @@ def contains(node, nodelist) :
             return True
     return False
 
-def neighbors(curnode, seats):
+def neighbors(curnode, seats, data):
     demand = curnode.calculate_demand()
     
     # Calculating gradient
@@ -113,7 +114,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
         # file.write("\nQ-size: " + str(q_size))
         best_score = 2 ** 64 - 1
         opt_prices = np.zeros(m)
-        while max_iters > 0 :
+        for _ in tqdm(range(max_iters), desc="Processing", unit="iteration"):
             prices = random_start_point(m, np.max(data['budgets']))
             curnode = Node()
             curnode.create(prices, seats, data)
@@ -121,7 +122,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
             q = []
             c = 0
             while c < 5 :
-                n, scores = neighbors(curnode, seats) 
+                n, scores = neighbors(curnode, seats, data) 
                 foundnextstep = False
                 while not foundnextstep and len(n) > 0 :
                     nprice = n[0].get_prices()
@@ -143,5 +144,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
                     if nscore < best_score :
                         best_score = nscore
                         opt_prices = prices
-            max_iters -= 1
+        file.write("Prices: \n")
+        for price in opt_prices :
+            file.write(str(price) + "\n")
     return opt_prices

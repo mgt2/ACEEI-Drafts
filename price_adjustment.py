@@ -134,3 +134,28 @@ def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
         gradient_node.create(new_prices, seats, node.data)
         neighbors = np.append(neighbors, gradient_node)
     return neighbors
+
+
+def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
+    adjust_node = Node()
+    adjust_node.create(prices, seats, data)
+    demand = adjust_node.calculate_demand()
+    oversubscribed = np.array(demand - seats)
+    j = np.argmax(oversubscribed)
+    while np.max(oversubscribed) > 0 :
+        d = int(0.5 * oversubscribed[j])
+        low_p = prices
+        high_p = max_budget
+
+        while high_p - low_p > epsilon :
+            prices[j] = 0.5 * (high_p + low_p)
+            demand = adjust_node.calculate_demand()
+            oversubscribed = np.array(demand - seats)
+
+            if oversubscribed[j] > d :
+                low_p = prices[j]
+            else :
+                high_p = prices[j]
+        prices[j] = high_p
+        j = np.argmax(oversubscribed)
+    return prices
