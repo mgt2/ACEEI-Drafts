@@ -47,7 +47,7 @@ def neighbors(curnode, seats, data):
 
  
 
-def tabu (data, bound, seats, max_runs=100, max_iters=100, q_size=100) :
+def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
     m = data['m']
     k = data['k']
     q = np.array([])

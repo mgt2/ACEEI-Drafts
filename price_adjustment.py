@@ -203,7 +203,7 @@ def reduce_undersubscription(node, seats) :
         return RuntimeError
 
     def get_undersubscribed(courses) :
-        undersubscribed = np.sum(courses)
+        undersubscribed = np.sum(courses, axis =0)
         return undersubscribed
     
     done = False

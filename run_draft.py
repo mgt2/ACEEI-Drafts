@@ -46,7 +46,7 @@ data_struct = get_data_struct(data)
 
 bound = (k * m / 2)**(1/2)
 
-opt_prices = tabu(data_struct, bound, seats, 100, 100, q_size=100)
+opt_prices = tabu(data_struct, bound, seats, 100, 1000, q_size=100)
 
 bestnode = Node()
 bestnode.create(opt_prices, seats, data_struct)
@@ -58,3 +58,5 @@ bestnode.prices = new_prices
 courses = reduce_undersubscription(bestnode, seats)
 print("Adjusted prices: ", bestnode.prices)
 print("Adjusted Score: ", bestnode.score())
+print("Final Allocations : \n", courses)
+
