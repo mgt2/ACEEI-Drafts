@@ -17,7 +17,7 @@ def contains(node, nodelist) :
             return True
     return False
 
-def neighbors(curnode, seats, data):
+def neighbors(curnode, seats):
     demand = curnode.calculate_demand()
     
     # Calculating gradient
@@ -51,105 +51,106 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
     m = data['m']
     k = data['k']
     q = np.array([])
-    # qscore = np.array([])
-    # start_prices = random_start_point(m, np.max(data['budgets']))
-    # curnode = Node()
-    # curnode.create(start_prices, seats, data)
-    # bestnode = curnode
-    # best_score = curnode.score()
-    # curscore = best_score
+    qscore = np.array([])
+    start_prices = random_start_point(m, np.max(data['budgets']))
+    curnode = Node()
+    curnode.create(start_prices, seats, data)
+    bestnode = curnode
+    best_score = curnode.score()
+    curscore = best_score
 
     with open('draft_output.txt', 'w') as file:
         file.write("Entering loop! ")
         print("Entering loop!")
         print("Q-size:", q_size)
-        # while (best_score > bound or max_runs > 0) and max_iters > 0:
-        #     q = np.append(q, curnode)
-        #     qscore = np.append(qscore, curscore)
-        #     if (len(q) >= q_size) :
-        #         q = q[1:]
-        #         qscore = qscore[1:]
-        #         print("Evicting...")
-        #     file.write("Finding neighbors! ")
-        #     print("Finding neighbors")
+        while (best_score > bound or max_runs > 0) and max_iters > 0:
+            q = np.append(q, curnode)
+            qscore = np.append(qscore, curscore)
+            if (len(q) >= q_size) :
+                q = q[1:]
+                qscore = qscore[1:]
+                print("Evicting...")
+            file.write("Finding neighbors! ")
+            print("Finding neighbors")
 
-        #     n, scores = neighbors(curnode, seats)
+            n, scores = neighbors(curnode, seats)
 
-        #     print(scores)
+            print(scores)
 
-        #     file.write(f"Neighbors found! ")
-        #     print("Neighbors found!")
+            file.write(f"Neighbors found! ")
+            print("Neighbors found!")
 
-        #     best_neighbor_score = scores[0]
-        #     print(n)
-        #     print(q)
-        #     curnode = n[0]
-        #     # while contains(n[0], q) :
-        #     while np.isin(scores[0], qscore) :
-        #         print("HERE")
-        #         if (len(n) > 1) :
-        #             curnode = n[1]
-        #             best_neighbor_score = scores[1]
-        #             n = n[1:]
-        #             scores = scores[1:]
-        #         else :
-        #             n = []
-        #             break
-        #     curscore = best_neighbor_score
-        #     print("Best node: ", best_score)
-        #     print("Best neighbor score: ", best_neighbor_score)
-        #     print("Bound to beat: ", bound)
-        #     if best_neighbor_score < best_score :
-        #         bestnode = curnode
-        #         best_score = best_neighbor_score
-
-        #         file.write("Score improved! " + str(best_score))
-        #         print("New score: ", best_score)
-        #     elif best_score < bound :
-        #         max_runs -= 1
-        #         file.write("Max runs remaining: " + str(max_runs))
-        #         print("Max runs remaining: ", max_runs)
-        #     max_iters -=1
-        #     file.write("Max iters remaining: " + str(max_iters) + "\n\n")
-        #     print("Max iters remaining: ", max_iters)
-        # print("Q-size:", q_size)
-        # file.write("\nScore: " + str(best_score))
-        # file.write("\nQ-size: " + str(q_size))
-        best_score = 2 ** 64 - 1
-        opt_prices = np.zeros(m)
-        for _ in tqdm(range(max_iters), desc="Processing", unit="iteration"):
-            prices = random_start_point(m, np.max(data['budgets']))
-            curnode = Node()
-            curnode.create(prices, seats, data)
-            searcherror = curnode.score()
-            q = []
-            c = 0
-            while c < 5 :
-                n, scores = neighbors(curnode, seats, data) 
-                foundnextstep = False
-                while not foundnextstep and len(n) > 0 :
-                    nprice = n[0].get_prices()
-                    nscore = scores[0] # Paper uses demands instead of error: is this a problem?
-                    if not np.isin(scores[0], q) :
-                        foundnextstep = True
+            best_neighbor_score = scores[0]
+            print(n)
+            print(q)
+            curnode = n[0]
+            # while contains(n[0], q) :
+            while np.isin(scores[0], qscore) :
+                print("HERE")
+                if (len(n) > 1) :
+                    curnode = n[1]
+                    best_neighbor_score = scores[1]
                     n = n[1:]
                     scores = scores[1:]
-                if len(n) == 0 :
-                    c = 5
                 else :
-                    prices = nprice
-                    q.append(nscore)
-                    if nscore < searcherror :
-                        searcherror = nscore
-                        c = 0
-                    else :
-                        c += 1
-                    if nscore < best_score :
-                        best_score = nscore
-                        opt_prices = prices
-                        file.write("Best score updated! Score is now " + str(best_score) + "\n")
+                    n = []
+                    break
+            curscore = best_neighbor_score
+            print("Best node: ", best_score)
+            print("Best neighbor score: ", best_neighbor_score)
+            print("Bound to beat: ", bound)
+            if best_neighbor_score < best_score :
+                bestnode = curnode
+                best_score = best_neighbor_score
+
+                file.write("Score improved! " + str(best_score))
+                print("New score: ", best_score)
+            elif best_score < bound :
+                max_runs -= 1
+                file.write("Max runs remaining: " + str(max_runs))
+                print("Max runs remaining: ", max_runs)
+            max_iters -=1
+            file.write("Max iters remaining: " + str(max_iters) + "\n\n")
+            print("Max iters remaining: ", max_iters)
+        print("Q-size:", q_size)
+        file.write("\nScore: " + str(best_score) + "\n")
+        # file.write("\nQ-size: " + str(q_size))
+        # best_score = 2 ** 64 - 1
+        # opt_prices = np.zeros(m)
+        # for _ in tqdm(range(max_iters), desc="Tabu Processing", unit="iteration"):
+        #     prices = random_start_point(m, np.max(data['budgets']))
+        #     prices = adjust_prices_half(prices, np.max(data['budgets']), 0.1, seats, data)
+        #     curnode = Node()
+        #     curnode.create(prices, seats, data)
+        #     searcherror = curnode.score()
+        #     q = []
+        #     c = 0
+        #     while c < 5 :
+        #         n, scores = neighbors(curnode, seats, data) 
+        #         foundnextstep = False
+        #         while not foundnextstep and len(n) > 0 :
+        #             nprice = n[0].get_prices()
+        #             nscore = scores[0] # Paper uses demands instead of error: is this a problem?
+        #             if not np.isin(scores[0], q) :
+        #                 foundnextstep = True
+        #             n = n[1:]
+        #             scores = scores[1:]
+        #         if len(n) == 0 :
+        #             c = 5
+        #         else :
+        #             prices = nprice
+        #             q.append(nscore)
+        #             if nscore < searcherror :
+        #                 searcherror = nscore
+        #                 c = 0
+        #             else :
+        #                 c += 1
+        #             if nscore < best_score :
+        #                 best_score = nscore
+        #                 opt_prices = prices
+        #                 file.write("Best score updated! Score is now " + str(best_score) + "\n")
         file.write("Prices: \n")
-        for price in opt_prices :
+        for price in bestnode.prices :
             file.write(str(price) + "\n")
         file.write("Score: " + str(best_score))
-    return opt_prices
+    return bestnode.prices
