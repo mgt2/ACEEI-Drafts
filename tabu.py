@@ -64,8 +64,9 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
         print("Entering loop!")
         print("Q-size:", q_size)
         while (best_score > bound or max_runs > 0) and max_iters > 0:
-            q = np.append(q, curnode)
-            qscore = np.append(qscore, curscore)
+            if not np.isin(curscore, qscore) :
+                q = np.append(q, curnode)
+                qscore = np.append(qscore, curscore)
             if (len(q) >= q_size) :
                 q = q[1:]
                 qscore = qscore[1:]
@@ -94,6 +95,10 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                     scores = scores[1:]
                 else :
                     n = []
+                    start_prices = random_start_point(m, np.max(data['budgets']))
+                    curnode = Node()
+                    curnode.create(start_prices, seats, data)
+                    curscore = curnode.score()
                     break
             curscore = best_neighbor_score
             print("Best node: ", best_score)
@@ -109,6 +114,9 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                 max_runs -= 1
                 file.write("Max runs remaining: " + str(max_runs))
                 print("Max runs remaining: ", max_runs)
+            if best_score <= 0 :
+                file.write("\n Perfect score! \n")
+                break
             max_iters -=1
             file.write("Max iters remaining: " + str(max_iters) + "\n\n")
             print("Max iters remaining: ", max_iters)
