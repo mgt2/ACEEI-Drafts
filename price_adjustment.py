@@ -118,6 +118,7 @@ def adjust_prices(curnode, demand, seats, epsilon) :
                         changed = True
         if changed : 
             new_node.prices[j] += minprice
+            new_node.setDemandCalc(False)
         neighbors = np.append(neighbors, new_node)
     
     return neighbors
