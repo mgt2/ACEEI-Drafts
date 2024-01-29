@@ -208,7 +208,7 @@ def reduce_undersubscription(node, seats) :
         return undersubscribed
     
     done = False
-    demand = node.calculate_demand()
+    demand = node.get_demand()
     undersubscribed = np.array(demand - seats)
     old_courses = node.get_courses()
     while not done :

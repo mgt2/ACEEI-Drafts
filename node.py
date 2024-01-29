@@ -56,6 +56,11 @@ class Node :
         self.demand = np.sum(self.courses, axis=0)
         self.isDemandComputed = True
         return self.demand
+
+    def get_demand(self) :
+        if self.isDemandComputed :
+            return self.demand
+        return self.calculate_demand()
     
     def setDemandCalc(self, val) :
         self.isDemandComputed = val

@@ -18,7 +18,7 @@ def contains(node, nodelist) :
     return False
 
 def neighbors(curnode, seats):
-    demand = curnode.calculate_demand()
+    demand = curnode.get_demand()
     
     # Calculating gradient
     gradient = np.where(curnode.prices > 0, demand - seats, np.maximum(0, demand - seats))
