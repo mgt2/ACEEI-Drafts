@@ -67,9 +67,12 @@ def find_min_include(node, j, i, opt_without) :
         model.addConstr(gp.quicksum(x[l] * data['c_types'][l][k] for l in range(m)) <= data['maxes'][k])
 
     # Time constraints
-    for k in range(len(data['c_times'][0])) :
-        for l in range(len(data['c_times'][0][k])) :
-            model.addConstr(gp.quicksum(x[a] * data['c_times'][a][k][l] for a in range(m)) <= 1)
+    # for k in range(len(data['c_times'][0])) :
+    #     for l in range(len(data['c_times'][0][k])) :
+    #         model.addConstr(gp.quicksum(x[a] * data['c_times'][a][k][l] for a in range(m)) <= 1)
+    
+
+    model.addConstr(np.max(np.sum([x[a] * data['c_times'][a] for a in range(m)], axis=0)) <= 1)
 
     # Constraint: Course j must be chosen
     model.addConstr(x[j] == 1)
@@ -99,6 +102,7 @@ def adjust_prices(curnode, demand, seats, epsilon) :
     oversubscribed = np.where(demand - seats > 0, True, False)
     budgets = curnode.data['budgets']
     neighbors = np.array([])
+    count = 0
     for j in range(len(curnode.prices)) :
         minprice = 1000
         changed = False
@@ -106,7 +110,8 @@ def adjust_prices(curnode, demand, seats, epsilon) :
         new_node = Node()
         new_node.create(curnode.prices.copy(), seats, curnode.data)
         
-        if oversubscribed[j] == True:
+        if oversubscribed[j] == True :
+            count += 1
             for i in range(len(budgets)) :
                 if curnode.courses[i][j] == 1:
                     max_without_j = find_max_exclude(curnode, j, i)
@@ -120,6 +125,8 @@ def adjust_prices(curnode, demand, seats, epsilon) :
             new_node.prices[j] += minprice
             new_node.setDemandCalc(False)
         neighbors = np.append(neighbors, new_node)
+        if count > 40 :
+            break
     
     return neighbors
 

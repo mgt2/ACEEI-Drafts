@@ -79,3 +79,4 @@ def compute_demand(prices, data, j) :
 #     courses = np.vstack((courses, compute_demand(prices, data, j)))
 
 # print("Courses:\n", courses)
+
