@@ -134,7 +134,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
             q = []
             c = 0
             while c < 5 :
-                n, scores = neighbors(curnode, seats, data) 
+                n, scores = neighbors(curnode, seats) 
                 foundnextstep = False
                 while not foundnextstep and len(n) > 0 :
                     nprice = n[0].get_prices()

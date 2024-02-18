@@ -12,8 +12,8 @@ from tabu import *
 # model.dispose()
 
 # GENERATE DATA
-n = 250
-m = 50
+n = 50
+m = 10
 l = 5
 k = 5
 seats = np.full(m, 27) # as done in Othman paper

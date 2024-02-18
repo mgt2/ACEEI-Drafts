@@ -23,10 +23,12 @@ def find_max_exclude (node, w, j) :
         model.addConstr(gp.quicksum(x[i] * data['c_types'][i][k] for i in range(m)) <= data['maxes'][k])
 
     # Time constraints
-    for k in range(len(data['c_times'][0])) :
-        for l in range(len(data['c_times'][0][k])) :
-            model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
+    # for k in range(len(data['c_times'][0])) :
+    #     for l in range(len(data['c_times'][0][k])) :
+    #         model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
 
+     # Time constraints
+    model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
 
     # Cannot be course w
     model.addConstr(x[w] == 0, name=f"force_x_{w}_to_0")
@@ -72,7 +74,8 @@ def find_min_include(node, j, i, opt_without) :
     #         model.addConstr(gp.quicksum(x[a] * data['c_times'][a][k][l] for a in range(m)) <= 1)
     
 
-    model.addConstr(np.max(np.sum([x[a] * data['c_times'][a] for a in range(m)], axis=0)) <= 1)
+    # Time constraints
+    model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
 
     # Constraint: Course j must be chosen
     model.addConstr(x[j] == 1)
@@ -181,10 +184,12 @@ def reduce_undersubscription(node, seats) :
             model.addConstr(gp.quicksum(x[j] * node.data['c_types'][j][k] for j in range(node.data['m'])) <= node.data['maxes'][k])
 
         # Time constraints
-        for k in range(len(node.data['c_times'][0])) :
-            for l in range(len(node.data['c_times'][0][k])) :
-                model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
+        # for k in range(len(node.data['c_times'][0])) :
+        #     for l in range(len(node.data['c_times'][0][k])) :
+        #         model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
         
+        # Time constraints
+        model.addConstr(gp.quicksum(x[i] * node.data['c_times'][i][k][l] for k in range(len(node.data['c_times'][0])) for l in range(len(node.data['c_times'][0][k])) for i in range(node.data['m'])) <= 1)
         # Only undersubscribed courses can be changed
         for j in range(node.data['m']):
             if undersubscribed[j] < 0:
