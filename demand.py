@@ -25,7 +25,7 @@ def compute_demand(prices, data, j) :
         model.addConstr(gp.quicksum(x[i] * data['c_types'][i][k] for i in range(m)) <= data['maxes'][k])
 
     # Time constraints
-    model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
+    # model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
     
     # model.addConstr(0 <= np.max(np.sum([x[a] * data['c_times'][a] for a in range(m)], axis=0)) <= 1)
     # Compute the expression for the constraint

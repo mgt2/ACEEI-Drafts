@@ -28,7 +28,7 @@ def find_max_exclude (node, w, j) :
     #         model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
 
      # Time constraints
-    model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
+    #model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
 
     # Cannot be course w
     model.addConstr(x[w] == 0, name=f"force_x_{w}_to_0")
@@ -75,7 +75,7 @@ def find_min_include(node, j, i, opt_without) :
     
 
     # Time constraints
-    model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
+    #model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
 
     # Constraint: Course j must be chosen
     model.addConstr(x[j] == 1)
@@ -103,27 +103,27 @@ def find_min_include(node, j, i, opt_without) :
 def adjust_prices(curnode, demand, seats, epsilon) :
     minprice = 1000 # Larger than any price should be
     oversubscribed = np.where(demand - seats > 0, True, False)
+    oversubscribed_indices = np.where(oversubscribed)[0]
     budgets = curnode.data['budgets']
     neighbors = np.array([])
     count = 0
-    for j in range(len(curnode.prices)) :
+    for j in oversubscribed_indices :
         minprice = 1000
         changed = False
 
         new_node = Node()
         new_node.create(curnode.prices.copy(), seats, curnode.data)
         
-        if oversubscribed[j] == True :
-            count += 1
-            for i in range(len(budgets)) :
-                if curnode.courses[i][j] == 1:
-                    max_without_j = find_max_exclude(curnode, j, i)
-                    min_with_j = find_min_include(curnode, j, i, max_without_j)
+        count += 1
+        for i in range(len(budgets)) :
+            if curnode.courses[i][j] == 1:
+                max_without_j = find_max_exclude(curnode, j, i)
+                min_with_j = find_min_include(curnode, j, i, max_without_j)
 
-                    price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
-                    if price < minprice :
-                        minprice = price
-                        changed = True
+                price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
+                if price < minprice :
+                    minprice = price
+                    changed = True
         if changed : 
             new_node.prices[j] += minprice
             new_node.setDemandCalc(False)
@@ -189,7 +189,7 @@ def reduce_undersubscription(node, seats) :
         #         model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
         
         # Time constraints
-        model.addConstr(gp.quicksum(x[i] * node.data['c_times'][i][k][l] for k in range(len(node.data['c_times'][0])) for l in range(len(node.data['c_times'][0][k])) for i in range(node.data['m'])) <= 1)
+        # model.addConstr(gp.quicksum(x[i] * node.data['c_times'][i][k][l] for k in range(len(node.data['c_times'][0])) for l in range(len(node.data['c_times'][0][k])) for i in range(node.data['m'])) <= 1)
         # Only undersubscribed courses can be changed
         for j in range(node.data['m']):
             if undersubscribed[j] < 0:
