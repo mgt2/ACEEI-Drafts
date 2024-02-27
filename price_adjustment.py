@@ -128,7 +128,7 @@ def adjust_prices(curnode, demand, seats, epsilon) :
             new_node.prices[j] += minprice
             new_node.setDemandCalc(False)
         neighbors = np.append(neighbors, new_node)
-        if count > 40 :
+        if count > 50 :
             break
     
     return neighbors
