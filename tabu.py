@@ -37,9 +37,46 @@ if __name__ == '__main__':
         pool.join()
         neighbors = np.array(gradient_neighbors)
         
-        # Calculating individual adjustment
-        individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
-        neighbors = np.append(gradient_neighbors, individual_adj_neighbors)
+        # Finding individual neighbors
+        def get_individual_neighbors() :
+            minprice = 1000 # Larger than any price should be
+            oversubscribed = np.where(demand - seats > 0, True, False)
+            oversubscribed_indices = np.where(oversubscribed)[0]
+
+            # If there are more than 50 oversubscribed courses, randomly choose 50 of them
+            if len(oversubscribed_indices) > 50 :
+                selected_indices = np.random.choice(len(oversubscribed_indices), size=50, replace=False)
+                oversubscribed_indices = oversubscribed_indices[selected_indices]
+
+            neighbors = np.array([])
+
+            for j in oversubscribed_indices :
+                minprice = 1000
+                new_node = Node()
+                new_node.create(curnode.prices.copy(), seats, curnode.data)
+        
+                budget_indices = np.where(curnode.courses[:, j], True, False)
+                budget_indices = np.where(budget_indices)[0]
+
+                individual_data = [(curnode, 1e-5, j, student_index) for student_index in budget_indices]
+
+                num_cores = multiprocessing.cpu_count()
+                pool = multiprocessing.Pool(processes=num_cores)
+
+                individual_prices = pool.map(remove_student, individual_data)
+
+                pool.close()
+                pool.join()
+
+                minprice = np.min(np.array(individual_prices))
+                new_node.prices[j] += minprice
+                new_node.setDemandCalc(False)
+                neighbors = np.append(neighbors, new_node)
+            return neighbors
+
+            # individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
+        individual_neighbors = get_individual_neighbors()
+        neighbors = np.append(gradient_neighbors, individual_neighbors)
         # neighbors = gradient_neighbors
         # Extract scores from nodes and create an array
         scores = np.array([node.score() for node in neighbors])

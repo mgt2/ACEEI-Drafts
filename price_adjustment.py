@@ -115,15 +115,16 @@ def adjust_prices(curnode, demand, seats, epsilon) :
         new_node.create(curnode.prices.copy(), seats, curnode.data)
         
         count += 1
-        for i in range(len(budgets)) :
-            if curnode.courses[i][j] == 1:
-                max_without_j = find_max_exclude(curnode, j, i)
-                min_with_j = find_min_include(curnode, j, i, max_without_j)
+        budget_indices = np.where(curnode.courses[:, j], True, False)
+        budget_indices = np.where(budget_indices)[0]
+        for i in budget_indices :
+            max_without_j = find_max_exclude(curnode, j, i)
+            min_with_j = find_min_include(curnode, j, i, max_without_j)
 
-                price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
-                if price < minprice :
-                    minprice = price
-                    changed = True
+            price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
+            if price < minprice :
+                minprice = price
+                changed = True
         if changed : 
             new_node.prices[j] += minprice
             new_node.setDemandCalc(False)
@@ -132,6 +133,38 @@ def adjust_prices(curnode, demand, seats, epsilon) :
             break
     
     return neighbors
+
+# Same as adjust_prices, but for one course only. This is done to allow multiprocessing
+def reduce_students(curnode, seats, epsilon, oversubscribed_index) :
+    minprice = 1000
+    changed = False
+
+    new_node = Node()
+    new_node.create(curnode.prices.copy(), seats, curnode.data)
+    
+    budget_indices = np.where(curnode.courses[:, oversubscribed_index], True, False)
+    budget_indices = np.where(budget_indices)[0]
+    for i in budget_indices :
+        max_without_j = find_max_exclude(curnode, oversubscribed_index, i)
+        min_with_j = find_min_include(curnode, oversubscribed_index, i, max_without_j)
+
+        price = curnode.prices[oversubscribed_index] +  curnode.data['budgets'][i] - min_with_j + epsilon
+        if price < minprice :
+            minprice = price
+            changed = True
+    if changed : 
+        new_node.prices[oversubscribed_index] += minprice
+        new_node.setDemandCalc(False)
+    return new_node
+
+# Finds price increase it would take to remove a student with student_index from an oversubscribed course
+def remove_student(individual_data) :
+    (curnode, epsilon, oversubscribed_index, student_index) = individual_data
+    max_without_j = find_max_exclude(curnode, oversubscribed_index, student_index)
+    min_with_j = find_min_include(curnode, oversubscribed_index, student_index, max_without_j)
+
+    price = curnode.prices[oversubscribed_index] +  curnode.data['budgets'][student_index] - min_with_j + epsilon
+    return price
 
 # def create_gradient_node (node, gradient, max_change_val, seats) :
 #     gradient_node = Node()
@@ -160,7 +193,7 @@ def adjust_prices(curnode, demand, seats, epsilon) :
 #     neighbors = np.array(gradient_nodes)
 #     return neighbors
 
-
+# Creates a gradient node when provided with the original node and extra data
 def adjust_gradient_prices(gradient_data):
     (node, gradient, max_change_val, seats) = gradient_data
     gradient_node = Node()
