@@ -75,3 +75,7 @@ class Node :
             self.demand = np.sum(self.courses, axis=0)
         clearing_error = np.where(self.prices > 0, self.demand - self.seats, np.maximum(0, self.demand - self.seats))
         return np.linalg.norm(clearing_error)
+    
+
+
+
