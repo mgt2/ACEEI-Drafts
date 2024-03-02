@@ -2,7 +2,6 @@ import numpy as np
 import gurobipy as gp
 from gurobipy import GRB
 from node import *
-import multiprocessing
 gp.setParam("TokenFile", "gurobi.lic")
 
 def find_max_exclude (node, w, j) :
@@ -14,8 +13,8 @@ def find_max_exclude (node, w, j) :
 
     # Sets objective
     model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) +
-                   gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)),
-                   sense=GRB.MAXIMIZE)
+                gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)),
+                sense=GRB.MAXIMIZE)
     # Courses cannot exceed budget of agent
     model.addConstr(gp.quicksum(x[i] * prices[i] for i in range(m)) <= data['budgets'][j])
 
@@ -28,7 +27,7 @@ def find_max_exclude (node, w, j) :
     #     for l in range(len(data['c_times'][0][k])) :
     #         model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
 
-     # Time constraints
+    # Time constraints
     #model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
 
     # Cannot be course w
@@ -134,33 +133,41 @@ def adjust_prices(curnode, demand, seats, epsilon) :
     
     return neighbors
 
-def create_gradient_node (node, gradient, max_change_val, seats) :
+# def create_gradient_node (node, gradient, max_change_val, seats) :
+#     gradient_node = Node()
+#     c = max_change_val / np.max(np.abs(gradient * node.prices))
+#     new_prices = node.prices + c * gradient * node.prices
+#     gradient_node.create(new_prices, seats, node.data)
+#     neighbors = np.append(neighbors, gradient_node)
+#     return gradient_node
+
+# Adjusts prices with gradient
+# def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
+#     neighbors = np.array([])
+#     data = [(node, gradient, max_change_val, seats) for max_change_val in max_change_vals]
+#     # for i in range(len(max_change_vals)) :
+#     #     gradient_node = Node()
+#     #     c = max_change_vals[i] / np.max(np.abs(gradient * node.prices))
+#     #     new_prices = node.prices + c * gradient * node.prices
+#     #     gradient_node.create(new_prices, seats, node.data)
+#     #     neighbors = np.append(neighbors, gradient_node)
+#     num_cores = multiprocessing.cpu_count()
+#     pool = multiprocessing.Pool(processes=num_cores)
+
+#     gradient_nodes = pool.starmap(create_gradient_node, data)
+#     pool.close()
+#     pool.join()
+#     neighbors = np.array(gradient_nodes)
+#     return neighbors
+
+
+def adjust_gradient_prices(gradient_data):
+    (node, gradient, max_change_val, seats) = gradient_data
     gradient_node = Node()
     c = max_change_val / np.max(np.abs(gradient * node.prices))
     new_prices = node.prices + c * gradient * node.prices
     gradient_node.create(new_prices, seats, node.data)
-    neighbors = np.append(neighbors, gradient_node)
     return gradient_node
-
-# Adjusts prices with gradient
-def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
-    gradient_node = Node()
-    neighbors = np.array([])
-    data = [(node, gradient, max_change_val, seats) for max_change_val in max_change_vals]
-    # for i in range(len(max_change_vals)) :
-    #     gradient_node = Node()
-    #     c = max_change_vals[i] / np.max(np.abs(gradient * node.prices))
-    #     new_prices = node.prices + c * gradient * node.prices
-    #     gradient_node.create(new_prices, seats, node.data)
-    #     neighbors = np.append(neighbors, gradient_node)
-    num_cores = multiprocessing.cpu_count()
-    pool = multiprocessing.Pool(processes=num_cores)
-
-    gradient_nodes = pool.starmap(create_gradient_node, max_change_vals)
-    pool.close()
-    pool.join()
-    neighbors = np.array(gradient_nodes)
-    return neighbors
 
 
 def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
@@ -192,8 +199,8 @@ def reduce_undersubscription(node, seats) :
         model = gp.Model("reoptimize")
         x = model.addVars(node.data['m'], vtype = GRB.BINARY, name="x")
         model.setObjective(gp.quicksum(x[j] * node.data['valuations'][i][j] for j in range(node.data['m'])) +
-                   gp.quicksum((j < k) * x[j] * x[k] * node.data['etas'][i][j][k] for j in range(node.data['m']) for k in range(node.data['m'])),
-                   sense=GRB.MAXIMIZE)
+                gp.quicksum((j < k) * x[j] * x[k] * node.data['etas'][i][j][k] for j in range(node.data['m']) for k in range(node.data['m'])),
+                sense=GRB.MAXIMIZE)
         
         model.addConstr(gp.quicksum(x[j] * node.prices[j] for j in range(node.data['m'])) <= node.data['budgets'][i] * 1.1)
         for k in range(len(node.data['c_types'][0])):
