@@ -9,6 +9,7 @@ import multiprocessing
 gurobipy.setParam("TokenFile", "gurobi.lic")
 
 if __name__ == '__main__':
+    gurobipy.setParam("TokenFile", "gurobi.lic")
     def random_start_point(m, maxbudg) :
         start_prices = np.random.rand(m) * maxbudg
         return start_prices
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         max_change_vals = np.array([10, 5, 1, 0.5, 0.1])
 
         gradient_data = [(curnode, gradient, max_change_val, seats) for max_change_val in max_change_vals]
-        num_cores = multiprocessing.cpu_count()
+        num_cores = min(multiprocessing.cpu_count(), 5)
         pool = multiprocessing.Pool(processes=num_cores)
 
         gradient_neighbors = pool.map(adjust_gradient_prices, gradient_data)
@@ -216,7 +217,7 @@ if __name__ == '__main__':
 
     bound = (k * m / 2)**(1/2)
 
-    opt_prices = tabu(data_struct, bound, seats, 3, 3, q_size=5)
+    opt_prices = tabu(data_struct, bound, seats, 3, 11, q_size=5)
 
     bestnode = Node()
     bestnode.create(opt_prices, seats, data_struct)
