@@ -25,7 +25,7 @@ def neighbors(curnode, seats):
     max_change_vals = np.array([10, 5, 1, 0.5, 0.1])
     gradient_neighbors = adjust_gradient_prices(curnode, gradient, max_change_vals, seats)
     
-    #Calculating individual adjustment
+    # Calculating individual adjustment
     individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
     neighbors = np.append(gradient_neighbors, individual_adj_neighbors)
     # neighbors = gradient_neighbors

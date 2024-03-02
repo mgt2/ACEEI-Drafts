@@ -2,6 +2,7 @@ import numpy as np
 import gurobipy as gp
 from gurobipy import GRB
 from node import *
+import multiprocessing
 gp.setParam("TokenFile", "gurobi.lic")
 
 def find_max_exclude (node, w, j) :
@@ -133,17 +134,32 @@ def adjust_prices(curnode, demand, seats, epsilon) :
     
     return neighbors
 
+def create_gradient_node (node, gradient, max_change_val, seats) :
+    gradient_node = Node()
+    c = max_change_val / np.max(np.abs(gradient * node.prices))
+    new_prices = node.prices + c * gradient * node.prices
+    gradient_node.create(new_prices, seats, node.data)
+    neighbors = np.append(neighbors, gradient_node)
+    return gradient_node
 
 # Adjusts prices with gradient
 def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
     gradient_node = Node()
     neighbors = np.array([])
-    for i in range(len(max_change_vals)) :
-        gradient_node = Node()
-        c = max_change_vals[i] / np.max(np.abs(gradient * node.prices))
-        new_prices = node.prices + c * gradient * node.prices
-        gradient_node.create(new_prices, seats, node.data)
-        neighbors = np.append(neighbors, gradient_node)
+    data = [(node, gradient, max_change_val, seats) for max_change_val in max_change_vals]
+    # for i in range(len(max_change_vals)) :
+    #     gradient_node = Node()
+    #     c = max_change_vals[i] / np.max(np.abs(gradient * node.prices))
+    #     new_prices = node.prices + c * gradient * node.prices
+    #     gradient_node.create(new_prices, seats, node.data)
+    #     neighbors = np.append(neighbors, gradient_node)
+    num_cores = multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(processes=num_cores)
+
+    gradient_nodes = pool.starmap(create_gradient_node, max_change_vals)
+    pool.close()
+    pool.join()
+    neighbors = np.array(gradient_nodes)
     return neighbors
 
 

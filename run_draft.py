@@ -12,8 +12,8 @@ from tabu import *
 # model.dispose()
 
 # GENERATE DATA
-n = 50
-m = 10
+n = 250
+m = 50
 l = 5
 k = 5
 seats = np.full(m, 27) # as done in Othman paper
@@ -46,7 +46,7 @@ data_struct = get_data_struct(data)
 
 bound = (k * m / 2)**(1/2)
 
-opt_prices = tabu(data_struct, bound, seats, 100, 100, q_size=5)
+opt_prices = tabu(data_struct, bound, seats, 3, 3, q_size=5)
 
 bestnode = Node()
 bestnode.create(opt_prices, seats, data_struct)
@@ -57,9 +57,15 @@ new_prices = adjust_prices_half(opt_prices, np.max(data_struct['budgets']), 0.1,
 bestnode.prices = new_prices
 bestnode.setDemandCalc(False)
 courses = reduce_undersubscription(bestnode, seats)
-print("Adjusted prices: ", bestnode.prices)
+print("Adjusted prices: [")
+for price in bestnode.prices :
+    print(price)
+print("]")
 print("Adjusted Score: ", bestnode.score())
-print("Final Allocations : \n", courses)
+print("Final Allocations : \n")
+for student in courses:
+    print(student)
+
 
 
 # TESTING SCORE
