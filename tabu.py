@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
             # individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
         individual_neighbors = get_individual_neighbors()
-        neighbors = np.append(gradient_neighbors, individual_neighbors)
+        neighbors = np.append(individual_neighbors, gradient_neighbors)
         # neighbors = gradient_neighbors
         # Extract scores from nodes and create an array
         scores = np.array([node.score() for node in neighbors])
