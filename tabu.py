@@ -74,8 +74,8 @@ if __name__ == '__main__':
                 neighbors = np.append(neighbors, new_node)
             return neighbors
 
-            # individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
-        individual_neighbors = get_individual_neighbors()
+        individual_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
+        #individual_neighbors = get_individual_neighbors()
         neighbors = np.append(individual_neighbors, gradient_neighbors)
         # neighbors = gradient_neighbors
         # Extract scores from nodes and create an array
@@ -220,8 +220,8 @@ if __name__ == '__main__':
             file.write("Score: " + str(best_score))
         return opt_prices
     # GENERATE DATA
-    n = 50
-    m = 10
+    n = 250
+    m = 50
     l = 5
     k = 5
     seats = np.full(m, 27) # as done in Othman paper
