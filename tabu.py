@@ -7,6 +7,22 @@ from tqdm import tqdm
 
 gurobipy.setParam("TokenFile", "gurobi.lic")
 
+
+def addToStash(nodestash, q, n, scores) :
+    # nodes = []
+    # nscores = []
+    # for i in range(len(n)):
+    #     ndemand = n[i].get_demand()
+    #     if not any(np.array_equal(row, ndemand) for row in q) :
+    #         nodes.append(n[i])
+    #         nscores.append(scores[i])
+    # for i in range(len(nodestash)):
+    #     ndemand = nodes[0].get_demand()
+        
+    # nodestash = np.append(nodestash, n)
+    # return nodestash
+    return []
+
 def random_start_point(m, maxbudg) :
     start_prices = np.random.rand(m) * maxbudg
     return start_prices
@@ -27,10 +43,11 @@ def neighbors(curnode, seats):
     
     #Calculating individual adjustment
     individual_adj_neighbors = adjust_prices(curnode, demand, seats, 1e-5)
+    # print(individual_adj_neighbors)
     neighbors = np.append(gradient_neighbors, individual_adj_neighbors)
     # neighbors = gradient_neighbors
     # Extract scores from nodes and create an array
-    scores = np.array([node.score() for node in neighbors])
+    scores = np.array([node.get_score() for node in neighbors])
     #print(scores)
     # Get indices that would sort the scores
     sorted_indices = np.argsort(scores)
@@ -124,14 +141,16 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
         best_score = 2 ** 64 - 1
         opt_prices = np.zeros(m)
         for _ in tqdm(range(max_iters), desc="Tabu Processing", unit="iteration"):
-            prices = random_start_point(m, np.max(data['budgets']))
-            prices = adjust_prices_half(prices, np.max(data['budgets']), 0.1, seats, data)
+            prices = random_start_point(m, np.min(data['budgets']/k))
+            # prices = adjust_prices_half(prices, np.max(data['budgets']), 0.1, seats, data)
             curnode = Node()
             curnode.create(prices, seats, data)
-            searcherror = curnode.score()
+            searcherror = curnode.get_score()
             q = np.array([])
+            nodestash = np.array([])
             c = 0
-            while c < 5 :
+            prev_score = searcherror
+            while c < 5 and best_score > 0.0:
                 n, scores = neighbors(curnode, seats) 
                 foundnextstep = False
                 while not foundnextstep and len(n) > 0 :
@@ -139,10 +158,13 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                     nscore = scores[0] # Paper uses demands instead of error: is this a problem?
                     ndemand = np.array(n[0].get_demand())
                     #if not np.isin(nscore, q) :
-                    if not any(np.array_equal(row, ndemand) for row in q) :
-                        foundnextstep = True
                     n = n[1:]
                     scores = scores[1:]
+                    if not any(np.array_equal(row, ndemand) for row in q) :
+                        foundnextstep = True
+                        if prev_score <= bound :
+                            nodestash = addToStash(nodestash, q, n, scores)
+                prev_score = nscore
                 if len(n) == 0 :
                     c = 5
                     print("Breaking...")
@@ -165,8 +187,16 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                         opt_prices = prices
                         file.write("Best score updated! Score is now " + str(best_score) + "\n")
                         file.flush()
+                    if nscore == 0.0 :
+                        file.write("Perfect score!")
+                        file.flush()
+                        c = 5
         file.write("Prices: \n")
         for price in opt_prices :
             file.write(str(price) + "\n")
-        file.write("Score: " + str(best_score))
+        file.write("Score: " + str(best_score) + "\n\n")
+
+        #prices = adjust_prices_half(opt_prices, np.max(data['budgets']), 0.1, seats, data)
+
+
     return opt_prices

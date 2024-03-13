@@ -13,17 +13,19 @@ class Node :
     data = {}
     seats = np.array([])
     isDemandComputed = False
+    isScoreComputed = False
 
     def create(self, prices, seats, data) :
         self.prices = prices
         self.seats = seats
         self.data = data
-        self.demand = self.calculate_demand()
+        self.demand = self._calculate_demand()
         return
 
     def set_prices(self, new_prices) :
         self.prices = new_prices
         self.isDemandComputed = False
+        self.isScoreComputed = False
         return
     
     def get_prices(self) :
@@ -49,7 +51,7 @@ class Node :
             return False
         return True
     
-    def calculate_demand(self) :
+    def _calculate_demand(self) :
         self.courses = np.empty((0, self.data['m']), dtype=int)
         for i in range(self.data['n']) :
             self.courses = np.vstack((self.courses, compute_demand(self.prices, self.data, i)))
@@ -60,13 +62,13 @@ class Node :
     def get_demand(self) :
         if self.isDemandComputed :
             return self.demand
-        return self.calculate_demand()
+        return self._calculate_demand()
     
     def setDemandCalc(self, val) :
         self.isDemandComputed = val
         return
     
-    def score(self) :
+    def _score(self) :
         if not self.isDemandComputed :
             self.courses = np.empty((0, self.data['m']), dtype=int)
             for i in range(self.data['n']) :
@@ -74,7 +76,16 @@ class Node :
         
             self.demand = np.sum(self.courses, axis=0)
         clearing_error = np.where(self.prices > 0, self.demand - self.seats, np.maximum(0, self.demand - self.seats))
-        return np.linalg.norm(clearing_error)
+        self.score = np.linalg.norm(clearing_error)
+        return self.score
+    
+    def get_score(self) :
+        if self.isScoreComputed :
+            return self.score
+        else :
+            self.isScoreComputed = True
+            return self._score()
+        
     
 
 

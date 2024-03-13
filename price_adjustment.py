@@ -115,15 +115,17 @@ def adjust_prices(curnode, demand, seats, epsilon) :
         new_node.create(curnode.prices.copy(), seats, curnode.data)
         
         count += 1
-        for i in range(len(budgets)) :
-            if curnode.courses[i][j] == 1:
-                max_without_j = find_max_exclude(curnode, j, i)
-                min_with_j = find_min_include(curnode, j, i, max_without_j)
 
-                price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
-                if price < minprice :
-                    minprice = price
-                    changed = True
+        budget_indices = np.where(curnode.courses[:, j], True, False)
+        budget_indices = np.where(budget_indices)[0]
+        for i in budget_indices :
+            max_without_j = find_max_exclude(curnode, j, i)
+            min_with_j = find_min_include(curnode, j, i, max_without_j)
+
+            price = curnode.prices[j] +  budgets[i] - min_with_j + epsilon
+            if price < minprice :
+                minprice = price
+                changed = True
         if changed : 
             new_node.prices[j] += minprice
             new_node.setDemandCalc(False)
@@ -150,7 +152,7 @@ def adjust_gradient_prices(node, gradient, max_change_vals, seats) :
 def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
     adjust_node = Node()
     adjust_node.create(prices, seats, data)
-    demand = adjust_node.calculate_demand()
+    demand = adjust_node.get_demand()
     oversubscribed = np.array(demand - seats)
     j = np.argmax(oversubscribed)
     while np.max(oversubscribed) > 0 :
