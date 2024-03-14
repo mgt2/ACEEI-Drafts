@@ -37,7 +37,7 @@ def generate_etas (n, m) :
     student_eta = np.zeros((n, m, m))
     # Create a random matrix
     for i in range(n) :
-        eta_values = np.random.uniform(-10, 10, size=(m, m))
+        eta_values = np.random.uniform(-100/(2 * m), 100/(2 * m), size=(m, m))
         np.fill_diagonal(eta_values, 0)
         student_eta[i] = np.triu(eta_values)
 

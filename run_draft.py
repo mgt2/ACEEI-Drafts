@@ -53,12 +53,13 @@ bestnode.create(opt_prices, seats, data_struct)
 print("Final prices: ", opt_prices)
 print("Score: ", bestnode.get_score())
 
-new_prices = adjust_prices_half(opt_prices, np.max(data_struct['budgets']), 0.1, seats, data_struct)
-bestnode.set_prices(new_prices)
-courses = reduce_undersubscription(bestnode, seats)
-print("Adjusted prices: ", bestnode.prices)
-print("Adjusted Score: ", bestnode.get_score())
-print("Final Allocations : \n", courses)
+# new_prices = adjust_prices_half(opt_prices, np.max(data_struct['budgets']), 0.1, seats, data_struct)
+# bestnode.set_prices(new_prices)
+# courses = reduce_undersubscription(bestnode, seats)
+# print("Adjusted prices: ", bestnode.prices)
+# print("Adjusted Score: ", bestnode.get_score())
+print("Final Allocations : \n", bestnode.get_courses())
+print("\n\nStudent Valuations: \n", data_struct['valuations'])
 
 
 # TESTING SCORE
