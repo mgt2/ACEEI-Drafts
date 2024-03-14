@@ -151,6 +151,8 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
         # return bestnode.prices
         best_score = 2 ** 64 - 1
         opt_prices = np.zeros(m)
+        file.write("Iteration\tSubiteration Number\tBest Neighbor Score\t\tBest Score\n")
+        file.write("---------------------------------------------------------------------------------\n")
         for _ in tqdm(range(max_iters), desc="Tabu Processing", unit="iteration"):
             prices = random_start_point(m, np.min(data['budgets']/k))
             # prices = adjust_prices_half(prices, np.max(data['budgets']), 0.1, seats, data)
@@ -158,9 +160,9 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
             curnode.create(prices, seats, data)
             searcherror = curnode.get_score()
             q = np.array([])
-            nodestash = np.array([])
+            # nodestash = np.array([])
             c = 0
-            prev_score = searcherror
+            # prev_score = searcherror
             while c < 5 and best_score > 0.0:
                 n, scores = neighbors(curnode, seats) 
                 foundnextstep = False
@@ -171,11 +173,11 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                     #if not np.isin(nscore, q) :
                     n = n[1:]
                     scores = scores[1:]
-                    if not any(np.array_equal(row, ndemand) for row in q) :
-                        foundnextstep = True
-                        if prev_score <= bound :
-                            nodestash = addToStash(nodestash, q, n, scores)
-                prev_score = nscore
+                    # if not any(np.array_equal(row, ndemand) for row in q) :
+                    #     foundnextstep = True
+                    #     if prev_score <= bound :
+                    #         nodestash = addToStash(nodestash, q, n, scores)
+                # prev_score = nscore
                 if len(n) == 0 :
                     c = 5
                     # print("Breaking...")
@@ -199,16 +201,16 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                         file.write("Best score updated! Score is now " + str(best_score) + "\n")
                         file.flush()
                     if nscore == 0.0 :
-                        file.write("Perfect score!")
+                        file.write("\nPerfect score!")
                         file.flush()
                         c = 5
-                if c == 5 and len(nodestash) > 0:
-                    curnode = nodestash[0]
-                    c = 0
-                    if len(nodestash) >= 2:
-                        nodestash = nodestash[1:]
-                    else :
-                        nodestash = np.array([])
+                # if c == 5 and len(nodestash) > 0:
+                #     curnode = nodestash[0]
+                #     c = 0
+                #     if len(nodestash) >= 2:
+                #         nodestash = nodestash[1:]
+                #     else :
+                #         nodestash = np.array([])
 
         file.write("Prices: \n")
         for price in opt_prices :
