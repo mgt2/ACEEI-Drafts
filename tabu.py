@@ -9,19 +9,31 @@ gurobipy.setParam("TokenFile", "gurobi.lic")
 
 
 def addToStash(nodestash, q, n, scores) :
-    # nodes = []
-    # nscores = []
-    # for i in range(len(n)):
-    #     ndemand = n[i].get_demand()
-    #     if not any(np.array_equal(row, ndemand) for row in q) :
-    #         nodes.append(n[i])
-    #         nscores.append(scores[i])
-    # for i in range(len(nodestash)):
-    #     ndemand = nodes[0].get_demand()
-        
-    # nodestash = np.append(nodestash, n)
-    # return nodestash
-    return []
+    nodes = np.array([])
+    nscores = np.array([])
+    stash_demands = np.array([])
+
+    for node in nodestash :
+        stash_demands = np.append(stash_demands, node.get_demand())
+    for i in range(len(n)):
+        ndemand = n[i].get_demand()
+        if any(np.array_equal(row, ndemand) for row in q) or any(np.array_equal(row, ndemand) for row in stash_demands):
+            continue
+        else:
+            nodes = np.append(nodes, n[i])
+            nscores = np.append(nscores, scores[i])
+    for i in range(len(nodestash)):
+        if nscores[0] < nodestash[i].get_score() :
+            nodestash = np.insert(nodestash, i, nodes[0])
+            if len(nodes) == 1 :
+                nodes = np.array([])
+                nscores = np.array([])
+                break
+            else :
+                nscores = nscores[1:]
+                nodes = nodes[1:]
+    nodestash = np.append(nodestash, n)
+    return nodestash
 
 def random_start_point(m, maxbudg) :
     start_prices = np.random.rand(m) * maxbudg
@@ -137,7 +149,6 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
         # print("Q-size:", q_size)
         # file.write("\nScore: " + str(best_score) + "\n")
         # return bestnode.prices
-        file.write("\nQ-size: " + str(q_size))
         best_score = 2 ** 64 - 1
         opt_prices = np.zeros(m)
         for _ in tqdm(range(max_iters), desc="Tabu Processing", unit="iteration"):
@@ -167,8 +178,8 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                 prev_score = nscore
                 if len(n) == 0 :
                     c = 5
-                    print("Breaking...")
-                    break
+                    # print("Breaking...")
+                    # break
                 else :
                     curnode = n[0]
                     prices = nprice
@@ -191,6 +202,14 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                         file.write("Perfect score!")
                         file.flush()
                         c = 5
+                if c == 5 and len(nodestash) > 0:
+                    curnode = nodestash[0]
+                    c = 0
+                    if len(nodestash) >= 2:
+                        nodestash = nodestash[1:]
+                    else :
+                        nodestash = np.array([])
+
         file.write("Prices: \n")
         for price in opt_prices :
             file.write(str(price) + "\n")
