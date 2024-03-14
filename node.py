@@ -43,11 +43,11 @@ class Node :
         return
     
     def isEqual(self, node) :
-        if not np.array_equal(self.prices, node.prices) :
+        if not np.array_equal(self.prices, node.get_prices()) :
             return False
-        if not self.score == node.score :
+        if not self.get_score() == node.get_score() :
             return False
-        if not np.array_equal(self.demand, node.demand) :
+        if not np.array_equal(self.get_demand(), node.get_demand()) :
             return False
         return True
     
@@ -66,6 +66,8 @@ class Node :
     
     def setDemandCalc(self, val) :
         self.isDemandComputed = val
+        if not val :
+            self.isScoreComputed = val
         return
     
     def _score(self) :
@@ -75,6 +77,7 @@ class Node :
                 self.courses = np.vstack((self.courses, compute_demand(self.prices, self.data, i)))
         
             self.demand = np.sum(self.courses, axis=0)
+            self.isDemandComputed = True
         clearing_error = np.where(self.prices > 0, self.demand - self.seats, np.maximum(0, self.demand - self.seats))
         self.score = np.linalg.norm(clearing_error)
         return self.score
