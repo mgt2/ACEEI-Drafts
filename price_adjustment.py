@@ -162,7 +162,7 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
 
         while high_p - low_p > epsilon :
             prices[j] = 0.5 * (high_p + low_p)
-            demand = adjust_node.calculate_demand()
+            demand = adjust_node.get_demand()
             oversubscribed = np.array(demand - seats)
 
             if oversubscribed[j] > d :
