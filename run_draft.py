@@ -57,6 +57,8 @@ data_struct['c_times'] = np.array(data_struct['c_times'])
 data_struct['c_types'] = np.array(data_struct['c_types'])
 data_struct['seats'] = np.array(data_struct['seats'])
 
+seats = data_struct['seats']
+
 bound = (k * m / 2)**(1/2)
 
 opt_prices = tabu(data_struct, bound, seats, 10, 10, q_size=5)

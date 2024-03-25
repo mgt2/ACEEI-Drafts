@@ -19,7 +19,7 @@ def find_max_exclude (node, w, j) :
     model.addConstr(gp.quicksum(x[i] * prices[i] for i in range(m)) <= data['budgets'][j])
 
     # Type constraints must be satisfied
-    for k in range(len(data['c_types'][0])):
+    for k in range(len(data['c_types'][j][0])):
         model.addConstr(gp.quicksum(x[i] * data['c_types'][j][i][k] for i in range(m)) <= data['maxes'][j][k])
 
     # Time constraints
@@ -38,7 +38,7 @@ def find_max_exclude (node, w, j) :
 
     # Don't print solver
     model.setParam('OutputFlag', 0)
-    
+    model.Params.NonConvex = 2
     # Optimize the model
     model.optimize()
 
@@ -65,8 +65,8 @@ def find_min_include(node, j, i, opt_without) :
     
     # Constraint: Courses must satisfy time and type constraints
     # Type constraints must be satisfied
-    for k in range(len(data['c_types'][0])):
-        model.addConstr(gp.quicksum(x[l] * data['c_types'][l][k] for l in range(m)) <= data['maxes'][k])
+    for k in range(len(data['c_types'][j][0])):
+        model.addConstr(gp.quicksum(x[l] * data['c_types'][j][l][k] for l in range(m)) <= data['maxes'][j][k])
 
     # Time constraints
     for k in range(len(data['c_times'][0])) :
@@ -85,7 +85,6 @@ def find_min_include(node, j, i, opt_without) :
 
     # Don't print solver
     model.setParam('OutputFlag', 0)
-
     # Optimize
     model.optimize()
 

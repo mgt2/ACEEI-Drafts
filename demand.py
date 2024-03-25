@@ -86,7 +86,7 @@ def compute_demand(prices, data, j) :
 # print("Courses:\n", courses)
 
 def isValidTime(schedule, c_time) :
-    return np.sum((schedule & c_time)) == 0
+    return np.sum(np.bitwise_and(schedule, c_time)) == 0
 
 def isValidType(count_types, c_type, maxes) :
     course_type = np.argmax(c_type)
@@ -99,7 +99,7 @@ def isValidBundle(schedule, c_times, count_types, c_types, maxes, bundle) :
         return False
     if not isValidType(count_types, c_types[bundle[0]], maxes) or not isValidType(count_types, c_types[bundle[1]], maxes) :
         return False
-    if np.sum(bundle[0] & bundle[1]) > 0 :
+    if np.sum(np.bitwise_and(bundle[0], bundle[1])) > 0 :
         return False
     if np.argmax(c_types[bundle[0]]) == np.argmax([bundle[1]]) and count_types[np.argmax(c_types[bundle[0]])] + 2 > maxes[np.argmax(c_types[bundle[0]])] :
         return False
@@ -115,9 +115,13 @@ def compute_demand(prices, data, j) :
     c_times = data['c_times']
     maxes = data['maxes'][j]
 
-    count_types = np.zeros(data['t'])
-    schedule = np.zeros(shape=(len(c_times), len(c_times[0])))
 
+
+    count_types = np.zeros(data['t'])
+    schedule = np.zeros(shape=(len(c_times[0]), len(c_times[0][0])))
+
+    c_times = c_times.astype(int)
+    schedule = schedule.astype(int)
     # Calculate the ratios
     ratios = valuations / np.array(prices)
 
@@ -140,8 +144,9 @@ def compute_demand(prices, data, j) :
     t_ratios = t_utilities / t_prices
     t_sorted_indices = np.argsort(t_ratios)[::-1]
     taken_course = np.zeros(m)
+    courses_picked = 0
 
-    while budget > 0 :
+    while budget > 0 and courses_picked < data['k']:
 
         # If best singleton has been used in a taken bundle already, or if best bundle has been used in a taken singleton already
         best_singleton_index = sorted_indices[0] if len(sorted_indices) > 0 else -1
@@ -177,9 +182,10 @@ def compute_demand(prices, data, j) :
                 t_sorted_indices = np.delete(t_sorted_indices, 0)
                 taken_course[i] = 1
                 taken_course[k] = 1
+                courses_picked += 2
 
                 # Adding bundle to schedule
-                schedule = schedule | c_times[i] | c_times[k]
+                schedule = schedule + c_times[i] + c_times[k]
 
                 # Adding course types to count_types
                 count_types[np.argmax(c_types[i])] += 1
@@ -197,13 +203,15 @@ def compute_demand(prices, data, j) :
                 x[sorted_indices[0]] = 1
                 budget -= prices[sorted_indices[0]]
                 taken_course[sorted_indices[0]] = 1
-                sorted_indices = np.delete(sorted_indices, 0)
 
                 # Adding singleton to schedule
-                schedule = schedule | c_times[sorted_indices[0]]
+                schedule = schedule + c_times[sorted_indices[0]]
 
                 # Adding course type to count_types
                 count_types[np.argmax(c_types[sorted_indices[0]])] += 1
+
+                sorted_indices = np.delete(sorted_indices, 0)
+                courses_picked += 1
             else :
                 x[sorted_indices[0]] = budget / prices[sorted_indices[0]]
                 budget = 0
