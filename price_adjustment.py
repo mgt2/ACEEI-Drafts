@@ -9,23 +9,23 @@ def find_max_exclude (node, w, j) :
     data = node.data
     prices = node.prices
     model = gp.Model("max_without_w")
-    x = model.addVars(m, vtype=GRB.BINARY, name="x")
+    x = model.addVars(m, lb=0, ub=1, vtype=GRB.CONTINUOUS, name="x")
 
     # Sets objective
     model.setObjective(gp.quicksum(x[i] * data['valuations'][j][i] for i in range(m)) +
-                   gp.quicksum((i < k) * x[i] * x[k] * data['etas'][j][i][k] for i in range(m) for k in range(m)),
+                   gp.quicksum(x[i] * x[k] * data['etas'][j][k][i] for i in range(m) for k in range(i)),
                    sense=GRB.MAXIMIZE)
     # Courses cannot exceed budget of agent
     model.addConstr(gp.quicksum(x[i] * prices[i] for i in range(m)) <= data['budgets'][j])
 
     # Type constraints must be satisfied
     for k in range(len(data['c_types'][0])):
-        model.addConstr(gp.quicksum(x[i] * data['c_types'][i][k] for i in range(m)) <= data['maxes'][k])
+        model.addConstr(gp.quicksum(x[i] * data['c_types'][j][i][k] for i in range(m)) <= data['maxes'][j][k])
 
     # Time constraints
-    # for k in range(len(data['c_times'][0])) :
-    #     for l in range(len(data['c_times'][0][k])) :
-    #         model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
+    for k in range(len(data['c_times'][0])) :
+        for l in range(len(data['c_times'][0][k])) :
+            model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for i in range(m)) <= 1)
 
      # Time constraints
     #model.addConstr(gp.quicksum(x[i] * data['c_times'][i][k][l] for k in range(len(data['c_times'][0])) for l in range(len(data['c_times'][0][k])) for i in range(m)) <= 1)
@@ -55,7 +55,7 @@ def find_min_include(node, j, i, opt_without) :
     data = node.data
     prices = node.prices
     model = gp.Model("max_without_w")
-    x = model.addVars(m, vtype=GRB.BINARY, name="x")
+    x = model.addVars(m, lb=0, ub=1, vtype=GRB.CONTINUOUS, name="x")
 
     # Objective: minimum cost
     model.setObjective(gp.quicksum(x[k] * prices[k] for k in range(m)), sense=GRB.MINIMIZE)
@@ -69,9 +69,9 @@ def find_min_include(node, j, i, opt_without) :
         model.addConstr(gp.quicksum(x[l] * data['c_types'][l][k] for l in range(m)) <= data['maxes'][k])
 
     # Time constraints
-    # for k in range(len(data['c_times'][0])) :
-    #     for l in range(len(data['c_times'][0][k])) :
-    #         model.addConstr(gp.quicksum(x[a] * data['c_times'][a][k][l] for a in range(m)) <= 1)
+    for k in range(len(data['c_times'][0])) :
+        for l in range(len(data['c_times'][0][k])) :
+            model.addConstr(gp.quicksum(x[a] * data['c_times'][a][k][l] for a in range(m)) <= 1)
     
 
     # Time constraints
@@ -176,19 +176,19 @@ def adjust_prices_half(prices, max_budget, epsilon, seats, data) :
 def reduce_undersubscription(node, seats) :
     def reoptimize(i, undersubscribed, node, old_courses) :
         model = gp.Model("reoptimize")
-        x = model.addVars(node.data['m'], vtype = GRB.BINARY, name="x")
+        x = model.addVars(m, lb=0, ub=1, vtype=GRB.CONTINUOUS, name="x")
         model.setObjective(gp.quicksum(x[j] * node.data['valuations'][i][j] for j in range(node.data['m'])) +
-                   gp.quicksum((j < k) * x[j] * x[k] * node.data['etas'][i][j][k] for j in range(node.data['m']) for k in range(node.data['m'])),
+                   gp.quicksum(x[j] * x[k] * node.data['etas'][i][k][j] for j in range(node.data['m']) for k in range(j)),
                    sense=GRB.MAXIMIZE)
         
         model.addConstr(gp.quicksum(x[j] * node.prices[j] for j in range(node.data['m'])) <= node.data['budgets'][i] * 1.1)
-        for k in range(len(node.data['c_types'][0])):
-            model.addConstr(gp.quicksum(x[j] * node.data['c_types'][j][k] for j in range(node.data['m'])) <= node.data['maxes'][k])
+        for k in range(len(node.data['c_types'][i])):
+            model.addConstr(gp.quicksum(x[j] * node.data['c_types'][i][j][k] for j in range(node.data['m'])) <= node.data['maxes'][i][k])
 
         # Time constraints
-        # for k in range(len(node.data['c_times'][0])) :
-        #     for l in range(len(node.data['c_times'][0][k])) :
-        #         model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
+        for k in range(len(node.data['c_times'][0])) :
+            for l in range(len(node.data['c_times'][0][k])) :
+                model.addConstr(gp.quicksum(x[j] * node.data['c_times'][j][k][l] for j in range(node.data['m'])) <= 1)
         
         # Time constraints
         # model.addConstr(gp.quicksum(x[i] * node.data['c_times'][i][k][l] for k in range(len(node.data['c_times'][0])) for l in range(len(node.data['c_times'][0][k])) for i in range(node.data['m'])) <= 1)

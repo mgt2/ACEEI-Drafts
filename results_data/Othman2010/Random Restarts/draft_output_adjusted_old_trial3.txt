@@ -1,0 +1,315 @@
+Entering loop! Finding neighbors! Neighbors found! Score improved! 63.54525946126902Max iters remaining: 999
+
+Finding neighbors! Neighbors found! Score improved! 61.032778078668514Max iters remaining: 998
+
+Finding neighbors! Neighbors found! Score improved! 58.728187440104094Max iters remaining: 997
+
+Finding neighbors! Neighbors found! Score improved! 56.542019772908716Max iters remaining: 996
+
+Finding neighbors! Neighbors found! Score improved! 53.25410782277739Max iters remaining: 995
+
+Finding neighbors! Neighbors found! Score improved! 48.0Max iters remaining: 994
+
+Finding neighbors! Neighbors found! Score improved! 43.278170016764804Max iters remaining: 993
+
+Finding neighbors! Neighbors found! Score improved! 41.88078318274385Max iters remaining: 992
+
+Finding neighbors! Neighbors found! Score improved! 37.54996671103717Max iters remaining: 991
+
+Finding neighbors! Neighbors found! Score improved! 32.12475680841802Max iters remaining: 990
+
+Finding neighbors! Neighbors found! Score improved! 17.60681686165901Max iters remaining: 989
+
+Finding neighbors! Neighbors found! Score improved! 15.0Max iters remaining: 988
+
+Finding neighbors! Neighbors found! Score improved! 10.677078252031311Max iters remaining: 987
+
+Finding neighbors! Neighbors found! Score improved! 6.708203932499369Max iters remaining: 986
+
+Finding neighbors! Neighbors found! Score improved! 5.0Max iters remaining: 985
+
+Finding neighbors! Neighbors found! Max iters remaining: 984
+
+Finding neighbors! Neighbors found! Score improved! 4.898979485566356Max iters remaining: 983
+
+Finding neighbors! Neighbors found! Score improved! 4.795831523312719Max iters remaining: 982
+
+Finding neighbors! Neighbors found! Max runs remaining: 99Max iters remaining: 981
+
+Finding neighbors! Neighbors found! Max runs remaining: 98Max iters remaining: 980
+
+Finding neighbors! Neighbors found! Score improved! 4.69041575982343Max iters remaining: 979
+
+Finding neighbors! Neighbors found! Max runs remaining: 97Max iters remaining: 978
+
+Finding neighbors! Neighbors found! Max runs remaining: 96Max iters remaining: 977
+
+Finding neighbors! Neighbors found! Max runs remaining: 95Max iters remaining: 976
+
+Finding neighbors! Neighbors found! Max runs remaining: 94Max iters remaining: 975
+
+Finding neighbors! Neighbors found! Max runs remaining: 93Max iters remaining: 974
+
+Finding neighbors! Neighbors found! Max runs remaining: 92Max iters remaining: 973
+
+Finding neighbors! Neighbors found! Max runs remaining: 91Max iters remaining: 972
+
+Finding neighbors! Neighbors found! Max runs remaining: 90Max iters remaining: 971
+
+Finding neighbors! Neighbors found! Max runs remaining: 89Max iters remaining: 970
+
+Finding neighbors! Neighbors found! Max runs remaining: 88Max iters remaining: 969
+
+Finding neighbors! Neighbors found! Score improved! 3.7416573867739413Max iters remaining: 968
+
+Finding neighbors! Neighbors found! Max runs remaining: 87Max iters remaining: 967
+
+Finding neighbors! Neighbors found! Score improved! 2.8284271247461903Max iters remaining: 966
+
+Finding neighbors! Neighbors found! Score improved! 2.0Max iters remaining: 965
+
+Finding neighbors! Neighbors found! Max runs remaining: 86Max iters remaining: 964
+
+Finding neighbors! Neighbors found! Max runs remaining: 85Max iters remaining: 963
+
+Finding neighbors! Neighbors found! Max runs remaining: 84Max iters remaining: 962
+
+Finding neighbors! Neighbors found! Score improved! 1.4142135623730951Max iters remaining: 961
+
+Finding neighbors! Neighbors found! Max runs remaining: 83Max iters remaining: 960
+
+Finding neighbors! Neighbors found! Max runs remaining: 82Max iters remaining: 959
+
+Finding neighbors! Neighbors found! Max runs remaining: 81Max iters remaining: 958
+
+Finding neighbors! Neighbors found! Max runs remaining: 80Max iters remaining: 957
+
+Finding neighbors! Neighbors found! Max runs remaining: 79Max iters remaining: 956
+
+Finding neighbors! Neighbors found! Max runs remaining: 78Max iters remaining: 955
+
+Finding neighbors! Neighbors found! Max runs remaining: 77Max iters remaining: 954
+
+Finding neighbors! Neighbors found! Max runs remaining: 76Max iters remaining: 953
+
+Finding neighbors! Neighbors found! Max runs remaining: 75Max iters remaining: 952
+
+Finding neighbors! Neighbors found! Max runs remaining: 74Max iters remaining: 951
+
+Finding neighbors! Neighbors found! Max runs remaining: 73Max iters remaining: 950
+
+Finding neighbors! Neighbors found! Max runs remaining: 72Max iters remaining: 949
+
+Finding neighbors! Neighbors found! Max runs remaining: 71Max iters remaining: 948
+
+Finding neighbors! Neighbors found! Max runs remaining: 70Max iters remaining: 947
+
+Finding neighbors! Neighbors found! Max runs remaining: 69Max iters remaining: 946
+
+Finding neighbors! Neighbors found! Max runs remaining: 68Max iters remaining: 945
+
+Finding neighbors! Neighbors found! Max runs remaining: 67Max iters remaining: 944
+
+Finding neighbors! Neighbors found! Max runs remaining: 66Max iters remaining: 943
+
+Finding neighbors! Neighbors found! Max runs remaining: 65Max iters remaining: 942
+
+Finding neighbors! Neighbors found! Max runs remaining: 64Max iters remaining: 941
+
+Finding neighbors! Neighbors found! Max runs remaining: 63Max iters remaining: 940
+
+Finding neighbors! Neighbors found! Max runs remaining: 62Max iters remaining: 939
+
+Finding neighbors! Neighbors found! Max runs remaining: 61Max iters remaining: 938
+
+Finding neighbors! Neighbors found! Max runs remaining: 60Max iters remaining: 937
+
+Finding neighbors! Neighbors found! Max runs remaining: 59Max iters remaining: 936
+
+Finding neighbors! Neighbors found! Max runs remaining: 58Max iters remaining: 935
+
+Finding neighbors! Neighbors found! Max runs remaining: 57Max iters remaining: 934
+
+Finding neighbors! Neighbors found! Max runs remaining: 56Max iters remaining: 933
+
+Finding neighbors! Neighbors found! Max runs remaining: 55Max iters remaining: 932
+
+Finding neighbors! Neighbors found! Max runs remaining: 54Max iters remaining: 931
+
+Finding neighbors! Neighbors found! Max runs remaining: 53Max iters remaining: 930
+
+Finding neighbors! Neighbors found! Max runs remaining: 52Max iters remaining: 929
+
+Finding neighbors! Neighbors found! Max runs remaining: 51Max iters remaining: 928
+
+Finding neighbors! Neighbors found! Max runs remaining: 50Max iters remaining: 927
+
+Finding neighbors! Neighbors found! Max runs remaining: 49Max iters remaining: 926
+
+Finding neighbors! Neighbors found! Max runs remaining: 48Max iters remaining: 925
+
+Finding neighbors! Neighbors found! Max runs remaining: 47Max iters remaining: 924
+
+Finding neighbors! Neighbors found! Max runs remaining: 46Max iters remaining: 923
+
+Finding neighbors! Neighbors found! Max runs remaining: 45Max iters remaining: 922
+
+Finding neighbors! Neighbors found! Max runs remaining: 44Max iters remaining: 921
+
+Finding neighbors! Neighbors found! Max runs remaining: 43Max iters remaining: 920
+
+Finding neighbors! Neighbors found! Max runs remaining: 42Max iters remaining: 919
+
+Finding neighbors! Neighbors found! Max runs remaining: 41Max iters remaining: 918
+
+Finding neighbors! Neighbors found! Max runs remaining: 40Max iters remaining: 917
+
+Finding neighbors! Neighbors found! Max runs remaining: 39Max iters remaining: 916
+
+Finding neighbors! Neighbors found! Max runs remaining: 38Max iters remaining: 915
+
+Finding neighbors! Neighbors found! Max runs remaining: 37Max iters remaining: 914
+
+Finding neighbors! Neighbors found! Max runs remaining: 36Max iters remaining: 913
+
+Finding neighbors! Neighbors found! Max runs remaining: 35Max iters remaining: 912
+
+Finding neighbors! Neighbors found! Max runs remaining: 34Max iters remaining: 911
+
+Finding neighbors! Neighbors found! Max runs remaining: 33Max iters remaining: 910
+
+Finding neighbors! Neighbors found! Max runs remaining: 32Max iters remaining: 909
+
+Finding neighbors! Neighbors found! Max runs remaining: 31Max iters remaining: 908
+
+Finding neighbors! Neighbors found! Max runs remaining: 30Max iters remaining: 907
+
+Finding neighbors! Neighbors found! Max runs remaining: 29Max iters remaining: 906
+
+Finding neighbors! Neighbors found! Max runs remaining: 28Max iters remaining: 905
+
+Finding neighbors! Neighbors found! Max runs remaining: 27Max iters remaining: 904
+
+Finding neighbors! Neighbors found! Max runs remaining: 26Max iters remaining: 903
+
+Finding neighbors! Neighbors found! Max runs remaining: 25Max iters remaining: 902
+
+Finding neighbors! Neighbors found! Max runs remaining: 24Max iters remaining: 901
+
+Finding neighbors! Neighbors found! Max runs remaining: 23Max iters remaining: 900
+
+Finding neighbors! Neighbors found! Max runs remaining: 22Max iters remaining: 899
+
+Finding neighbors! Neighbors found! Max runs remaining: 21Max iters remaining: 898
+
+Finding neighbors! Neighbors found! Max runs remaining: 20Max iters remaining: 897
+
+Finding neighbors! Neighbors found! Max runs remaining: 19Max iters remaining: 896
+
+Finding neighbors! Neighbors found! Max runs remaining: 18Max iters remaining: 895
+
+Finding neighbors! Neighbors found! Max runs remaining: 17Max iters remaining: 894
+
+Finding neighbors! Neighbors found! Max runs remaining: 16Max iters remaining: 893
+
+Finding neighbors! Neighbors found! Max runs remaining: 15Max iters remaining: 892
+
+Finding neighbors! Neighbors found! Max runs remaining: 14Max iters remaining: 891
+
+Finding neighbors! Neighbors found! Max runs remaining: 13Max iters remaining: 890
+
+Finding neighbors! Neighbors found! Max runs remaining: 12Max iters remaining: 889
+
+Finding neighbors! Neighbors found! Max runs remaining: 11Max iters remaining: 888
+
+Finding neighbors! Neighbors found! Max runs remaining: 10Max iters remaining: 887
+
+Finding neighbors! Neighbors found! Max runs remaining: 9Max iters remaining: 886
+
+Finding neighbors! Neighbors found! Max runs remaining: 8Max iters remaining: 885
+
+Finding neighbors! Neighbors found! Max runs remaining: 7Max iters remaining: 884
+
+Finding neighbors! Neighbors found! Max runs remaining: 6Max iters remaining: 883
+
+Finding neighbors! Neighbors found! Max runs remaining: 5Max iters remaining: 882
+
+Finding neighbors! Neighbors found! Max runs remaining: 4Max iters remaining: 881
+
+Finding neighbors! Neighbors found! Max runs remaining: 3Max iters remaining: 880
+
+Finding neighbors! Neighbors found! Max runs remaining: 2Max iters remaining: 879
+
+Finding neighbors! Neighbors found! Max runs remaining: 1Max iters remaining: 878
+
+Finding neighbors! Neighbors found! Max runs remaining: 0Max iters remaining: 877
+
+
+Score: 1.4142135623730951
+Prices: 
+23.512096591607428
+-3.3042718908607718
+19.58222260797232
+38.148036824883974
+39.85090403709302
+-1.9186614439648526
+18.095485334976605
+20.971377425336293
+4.701261139376679
+-0.13260503937692825
+Score: 1.4142135623730951
+
+Adjusted prices:  [23.51209659 -3.30427189 21.41976696 38.14803682 40.03276592 -1.91866144
+ 18.09548533 23.42216508 14.7367674  -0.13260504]
+Adjusted Score:  5.916079783099616
+Final Allocations : 
+ [[1 0 1 1 0 0 0 0 0 1]
+ [1 0 1 1 0 0 0 0 1 0]
+ [1 0 0 0 1 0 1 1 0 0]
+ [1 0 0 0 1 0 1 0 1 0]
+ [0 0 1 0 1 0 1 0 0 1]
+ [1 0 0 0 1 0 1 0 0 1]
+ [1 0 1 1 0 0 0 0 1 0]
+ [1 0 1 0 0 0 1 1 0 0]
+ [0 0 1 1 0 0 0 1 1 0]
+ [1 0 0 0 0 0 1 1 1 0]
+ [0 0 0 0 1 1 0 1 1 0]
+ [1 0 1 0 1 0 0 0 0 1]
+ [0 0 1 0 1 0 1 0 0 1]
+ [0 0 0 1 1 1 0 1 0 0]
+ [1 0 1 0 1 0 0 0 0 1]
+ [0 0 0 1 1 0 1 0 0 1]
+ [1 0 1 1 0 0 1 0 0 1]
+ [0 0 0 1 1 1 0 1 0 0]
+ [0 0 0 0 1 1 0 1 1 0]
+ [0 0 1 0 1 0 1 0 1 0]
+ [0 0 0 1 0 0 1 1 1 0]
+ [0 1 0 1 0 0 0 1 1 0]
+ [1 0 1 0 0 0 0 1 1 0]
+ [1 0 1 1 0 0 0 0 0 1]
+ [1 0 1 0 0 0 1 1 1 0]
+ [1 0 1 1 0 0 1 0 0 1]
+ [1 0 1 1 0 0 0 0 1 0]
+ [1 0 0 0 0 0 1 1 1 0]
+ [1 0 0 1 0 0 0 1 1 0]
+ [0 0 0 1 1 1 0 0 1 0]
+ [0 1 0 1 0 0 0 1 1 0]
+ [1 0 1 0 0 0 1 0 1 0]
+ [0 0 0 0 1 1 0 1 1 0]
+ [0 0 0 1 1 1 0 1 0 0]
+ [0 0 1 0 0 0 1 1 1 0]
+ [0 0 1 0 1 0 1 0 0 1]
+ [1 0 1 1 0 0 1 0 0 1]
+ [0 0 0 1 1 1 0 1 0 0]
+ [0 0 0 1 0 1 0 1 1 0]
+ [0 0 1 0 1 0 1 0 0 1]
+ [1 0 1 0 0 0 0 1 1 0]
+ [1 0 1 1 0 0 0 0 1 0]
+ [0 1 0 1 1 0 0 1 0 0]
+ [0 0 1 0 1 0 0 1 1 0]
+ [1 0 1 1 0 0 1 0 0 1]
+ [1 0 0 0 1 0 1 0 1 0]
+ [0 0 0 1 0 0 1 1 1 0]
+ [0 0 1 1 0 0 1 0 0 1]
+ [1 0 1 0 1 0 0 0 0 1]
+ [0 0 0 0 1 0 1 1 1 0]]

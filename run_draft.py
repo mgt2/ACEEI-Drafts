@@ -12,8 +12,8 @@ from tabu import *
 # model.dispose()
 
 # GENERATE DATA
-n = 50
-m = 10
+n = 250
+m = 50
 l = 5
 k = 5
 seats = np.full(m, 27) # as done in Othman paper
@@ -32,7 +32,7 @@ data = {
     'm': m,
     'k': k,
     'l': l,
-    'minl':0,
+    'minl':1,
     't' : 5,
     'class_days' : class_days,
     'class_times':class_times,

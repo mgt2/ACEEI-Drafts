@@ -200,7 +200,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                         opt_prices = prices
                         # file.write("Best score updated! Score is now " + str(best_score) + "\n")
                         # file.flush()
-                    file.write("\t" + str(i) + "\t\t\t\t" + str(c) + "\t\t\t" + str("{:.8f}".format(nscore)) + "\t\t\t\t" + str("{:.8f}".format(best_score)) + "\n")
+                    file.write("\t" + str(i) + "\t\t\t\t" + str(c) + "\t\t\t" + str("{:.7f}".format(nscore)) + "\t\t\t\t" + str("{:.7f}".format(best_score)) + "\n")
                     file.flush()
                     if nscore == 0.0 :
                         file.write("\nPerfect score!")
