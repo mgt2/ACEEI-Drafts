@@ -191,4 +191,4 @@ data = {
 
 data_struct = get_data_struct(data)
 
-print(data_struct['c_types'])
+# print(data_struct['c_types'])

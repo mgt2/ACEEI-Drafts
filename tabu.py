@@ -186,7 +186,7 @@ def tabu (data, bound, seats, max_runs=100, max_iters=1000, q_size=100) :
                     curnode = n[0]
                     prices = nprice
                     q = np.append(q, ndemand)
-                    if nscore <= searcherror :
+                    if nscore < searcherror :
                         searcherror = nscore
                         c = 0
                         # file.write("Score is now " + str(nscore) + "\n")
