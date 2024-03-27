@@ -44,7 +44,7 @@ import json
 # #indices = np.random.choice(len(class_days), size=m, p=np.array([0.1, 0.2, 0.3, 0.2, 0.2]))
 
 # data_struct = get_data_struct(data)
-file_path = "input_data/large_random/large_1.json"
+file_path = "input_data/large_random/large_2.json"
 with open(file_path, "r") as json_file:
     loaded_data = json.load(json_file)
     data_struct = loaded_data
