@@ -44,7 +44,7 @@ import json
 # #indices = np.random.choice(len(class_days), size=m, p=np.array([0.1, 0.2, 0.3, 0.2, 0.2]))
 
 # data_struct = get_data_struct(data)
-file_path = "input_data/large_random/large_2.json"
+file_path = "input_data/large_random/large_3.json"
 with open(file_path, "r") as json_file:
     loaded_data = json.load(json_file)
     data_struct = loaded_data
@@ -73,8 +73,12 @@ print("Score: ", bestnode.get_score())
 # courses = reduce_undersubscription(bestnode, seats)
 # print("Adjusted prices: ", bestnode.prices)
 # print("Adjusted Score: ", bestnode.get_score())
-print("Final Allocations : \n", bestnode.get_courses())
-print("\n\nStudent Valuations: \n", data_struct['valuations'])
+courses = bestnode.get_courses()
+print("Final Allocations :")
+for row in courses :
+    print(row)
+
+print("\nSpots taken in each course :", np.sum(courses, axis=0))
 
 
 # TESTING SCORE

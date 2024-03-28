@@ -50,7 +50,7 @@ def neighbors(curnode, seats):
     
     # Calculating gradient
     gradient = np.where(curnode.prices > 0, demand - seats, np.maximum(0, demand - seats))
-    max_change_vals = np.array([10, 5, 1, 0.5, 0.1])
+    max_change_vals = np.array([100, 10, 5, 1, 0.5, 0.1])
     gradient_neighbors = adjust_gradient_prices(curnode, gradient, max_change_vals, seats)
     
     #Calculating individual adjustment
